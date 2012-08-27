@@ -237,6 +237,7 @@
           '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' . "\n",
           new HTMLTag("html", array("xmlns" => "http://www.w3.org/1999/xhtml", "xml:lang" => "en"), array(
             new HTMLTag("head", array(), array(
+              new HTMLTag("base", array("href" => substr($_SERVER['SCRIPT_NAME'], 0, -9))),
               new HTMLTag("meta", array("http-equiv" => "content-type", "content" => "text/html; charset=utf-8")),
               $this->html_head
             )),

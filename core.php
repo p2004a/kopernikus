@@ -9,7 +9,25 @@
    * @file core.php
    */
 
+  if (!in_array($_SERVER['REQUEST_METHOD'], array("GET", "POST"))) {
+    die();
+  }
+  
+  session_save_path("./.sessions/");
   session_start();
+
+  // parsing uri  
+  $params;
+  if (isset($_GET['f']) && !is_array($_GET['f'])) {
+    $params = explode("/", $_GET['f']);
+    if (end($params) == "") array_pop($params);
+    foreach ($params as $elem) {
+      if (!preg_match("/^[a-z0-9_]+$/", $elem)) {
+        $params = array();
+        break;
+      }
+    }
+  }
   
   /**
    * @brief Tablica zawierająca ostrzeżenia
