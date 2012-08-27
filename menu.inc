@@ -2,7 +2,7 @@ Absolwenci | #
 Olimpijczycy | #
 Klasy | #
 Zdjęcia | #
-Plan Lekcji | http://plan.kopernik.mielec.pl/
+Plan Lekcji | http://plan.kopernik.mielec.pl/ | _blank
 Dziennik | #
 Sport | #
 

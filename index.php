@@ -10,7 +10,7 @@
    
   require("core.php");
 
-  $html->loadCSS("css/style.css")->addHead(new HTMLTag("title", array(), array("beta.kopernik.mielec.pl")));
+  $html->loadCSS("css/style.css")->addHead(new HTMLTag("title", array(), "beta.kopernik.mielec.pl"));
   $html->addBody(new HTMLFromFile("templates/main_body.html"));
   
   // Load menu
@@ -22,9 +22,9 @@
   foreach($menu_file as $menu_file_line) {
     if (trim($menu_file_line) == "") continue;
     $elem = explode("|", $menu_file_line);
-    if (count($elem) == 2) {
+    if (count($elem) >= 2) {
       $ul->add(new HTMLTag("li", array(), array(
-        new HTMLTag("a", array("href" => trim($elem[1])), trim($elem[0]))
+        new HTMLTag("a", array("href" => trim($elem[1]), "target" => (count($elem) >= 3 ? $elem[2] : "_self")), trim($elem[0]))
       )));
     } else {
       if ($top_menu) {
