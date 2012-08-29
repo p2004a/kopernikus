@@ -43,20 +43,20 @@
   }
   
   // Load page content
-  if (count($params) == 0) {
-    array_push($params, "main");
+  if (count($core_params) == 0) {
+    array_push($core_params, "main");
   }
-  if (!file_exists("./subpages/" . $params[0] . ".php")) {
+  if (!file_exists("./subpages/" . $core_params[0] . ".php")) {
     $subpage = "no_page";
   } else {
-    $subpage = $params[0];
+    $subpage = $core_params[0];
   }
-  array_splice($params, 0, 1);
+  array_splice($core_params, 0, 1);
   require("./subpages/" . $subpage . ".php");
   if (!function_exists("main")) {
     core_error("Found subpage but cannot find main function.");
   }
-  $html->select("content")->add(main($params));
+  $html->select("content")->add(main($core_params));
   
   core_render();
 ?>

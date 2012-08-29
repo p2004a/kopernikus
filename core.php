@@ -20,13 +20,13 @@
   session_start();
 
   // parsing uri  
-  $params;
+  $core_params;
   if (isset($_GET['f']) && !is_array($_GET['f'])) {
-    $params = explode("/", $_GET['f']);
-    if (end($params) == "") array_pop($params);
-    foreach ($params as $elem) {
+    $core_params = explode("/", $_GET['f']);
+    if (end($core_params) == "") array_pop($core_params);
+    foreach ($core_params as $elem) {
       if (!preg_match("/^[a-z0-9_]+$/", $elem)) {
-        $params = array();
+        $core_params = array();
         break;
       }
     }
