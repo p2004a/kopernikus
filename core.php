@@ -92,4 +92,6 @@
     require("install.php");
     die();
   }
+  
+  require("auth.php");
 ?>

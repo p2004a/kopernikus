@@ -105,4 +105,14 @@
     }
     return $out;
   }
+  
+  /**
+   * @brief Dodaje znaki unikowe do zapytania
+   *
+   * @param $query Zapytanie do bazy danych
+   * @return Wynik zapytania
+   */
+  function db_esc_str($str) {
+    return str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"), array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'), $str);
+  }
 ?>

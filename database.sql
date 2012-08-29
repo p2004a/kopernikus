@@ -25,7 +25,9 @@ CREATE TABLE group_permissions (
 );
 
 INSERT INTO groups (name) VALUES ('Administrators');
+INSERT INTO groups (name) VALUES ('Guests');
 INSERT INTO users (group_id, login, pass, name) VALUES ((SELECT group_id FROM groups WHERE name = 'Administrators'), 'admin', SHA2('admin', 512), 'Administrator');
+INSERT INTO users (group_id, login, pass, name) VALUES ((SELECT group_id FROM groups WHERE name = 'Guests'), 'guest', SHA2('guest', 512), 'Gość');
 INSERT INTO privileges (name, description) VALUES ('EditUsers', 'Dodawanie, usuwanie i edytowanie użytkowników');
 INSERT INTO group_permissions (group_id, privilege_id) VALUES ((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'EditUsers'));
 

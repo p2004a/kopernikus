@@ -21,6 +21,9 @@
     * 
     * Wywołana zwraca referencje do obiektu z podanym jako parametr id, jeśli element
     * ma w sobie wiele HTMLObjectów powinien sprawdzić id każdego z nich.
+    * Dotatkowo jeśli jest to HTMLTag i $id zawiera kropke to np "align.center"
+    * będzie przypasowane do pierwszego HTMLTag'a którego atrubut align ma wartość
+    * center, jeśli przed kropka nic nie ma, atrubutem jest "class".
     * @param $id Zawiera id szukanego elementu
     * @return Rererencje do znalezionego obietu lub referencje do HTMLNull gdzy podany element nie istnieje
     */
@@ -63,7 +66,7 @@
     public function &hide();
     
    /**
-    * @brief Pokazyje obiekt
+    * @brief Pokazuje obiekt
     * 
     * Wywołanie tej funkcji na obiekcie pokazuje go, wywołana na nim metoda render()
     * powinna zwrócić "normalny wynik".

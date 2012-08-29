@@ -1,6 +1,6 @@
 <?php
   /**
-   * @brief Strona główna
+   * @brief Skrypt instalacyjny
    * 
    * Skrypt powinien być uruchomiony raz, wtedy gdy strona pierwszy raz jest 
    * uruchamiana na danym serwerze. Dzieje się to automatycznie gdy core.php nie
