@@ -13,6 +13,9 @@
     die();
   }
   
+  if (!file_exists("./.sessions/")) {
+    mkdir("./.sessions/");
+  }
   session_save_path("./.sessions/");
   session_start();
 
@@ -81,6 +84,12 @@
   }
   
   require("html.php");
-  require("config.php");
   require("database.php");
+  
+  if (file_exists("config.php")) {
+    require("config.php");
+  } else {
+    require("install.php");
+    die();
+  }
 ?>

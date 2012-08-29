@@ -516,7 +516,7 @@
       
       
       $str = str_replace("&", "_-=+*^%$#@!;:", $str);
-      
+      $str = '<xmldata>' . $str . '</xmldata>';
       $parser = xml_parser_create('utf-8');
       xml_set_object($parser, $this);
       xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
@@ -531,13 +531,17 @@
     }
     
     protected function tag_open($parser, $name, $attr) {
-      $obj = new HTMLTag($name, $attr);
-      end($this->tag_stack)->add($obj);
-      array_push($this->tag_stack, $obj);
+      if ($name != 'xmldata') {
+        $obj = new HTMLTag($name, $attr);
+        end($this->tag_stack)->add($obj);
+        array_push($this->tag_stack, $obj);
+      }
     }
     
     protected function tag_close($parser, $name) {
-      array_pop($this->tag_stack);
+      if ($name != 'xmldata') {
+        array_pop($this->tag_stack);
+      }
     }
     
     protected function cdata($parser, $data) {

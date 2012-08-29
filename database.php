@@ -81,14 +81,14 @@
    * @param $query Zapytanie do bazy danych
    * @return Wynik zapytania
    */
-  function db_query(string $query) {
+  function db_query($query) {
     global $db_db, $db_num_queries;
     $closed = $db_db == NULL;
     if ($closed) {
       db_connect();
     }
     ++$db_num_queries;
-    $result = @myslq_query($query);
+    $result = @mysql_query($query);
     if (!$result) {
       core_error("Executed incorrect query to databese.");
     }
