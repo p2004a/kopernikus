@@ -94,4 +94,5 @@
   }
   
   require("auth.php");
+  require("form.php");
 ?>
