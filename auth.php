@@ -60,14 +60,18 @@
   }
   
   /**
-   * @brief Sprawdza czy użytkownik moze wykonać akcję
+   * @brief Sprawdza czy użytkownik moze wykonać akcje
    *
+   * Jako parametr moje przyjac wiele akcji
    * @return odpowiadajaca wartośc logiczną
    */
-  function auth_check_permission($privilege) {
-    if (1 == count(db_query("SELECT * from group_permissions WHERE group_id = (SELECT group_id FROM users WHERE user_id = '{$_SESSION['user_id']}') AND privilege_id = (SELECT privilege_id FROM privileges WHERE name = '" . db_esc_str($privilege) . "')"))) {
-      return true;
+  function auth_check_permission() {
+    $args = func_get_args();
+    foreach ($args as $privilege) {
+      if (0 == count(db_query("SELECT * from group_permissions WHERE group_id = (SELECT group_id FROM users WHERE user_id = '{$_SESSION['user_id']}') AND privilege_id = (SELECT privilege_id FROM privileges WHERE name = '" . db_esc_str($privilege) . "')"))) {
+        return false;
+      }
     }
-    return false;
+    return true;
   }
 ?>
