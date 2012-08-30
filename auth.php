@@ -13,8 +13,10 @@
   if (!isset($_SESSION['user_id']) 
    || $_SESSION['ip'] != $_SERVER['REMOTE_ADDR']
    || 1 != count(db_query("SELECT user_id FROM users WHERE user_id = '{$_SESSION['user_id']}'"))) {
-    $_SESSION['user_id'] = db_query("SELECT user_id FROM users WHERE login = 'guest'")[0]['user_id'];
+    $res = db_query("SELECT user_id FROM users WHERE login = 'guest'");
+    $_SESSION['user_id'] = $res[0]['user_id'];
     $_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
+    unset($res);
   }
   
   /**
@@ -43,7 +45,8 @@
    * (loguje go jako gościa)
    */
   function auth_log_out() {
-    $_SESSION['user_id'] = db_query("SELECT user_id FROM users WHERE login = 'guest'")[0]['user_id'];
+    $res = db_query("SELECT user_id FROM users WHERE login = 'guest'");
+    $_SESSION['user_id'] = $res[0]['user_id'];
   }
   
   /**
@@ -52,7 +55,8 @@
    * @return tablica asociacyjna z polami: user_id, login, name
    */
   function auth_who() {
-    return db_query("SELECT user_id, name, login FROM users WHERE user_id = '{$_SESSION['user_id']}'")[0];
+    $res = db_query("SELECT user_id, name, login FROM users WHERE user_id = '{$_SESSION['user_id']}'");
+    return $res[0];
   }
   
   /**
