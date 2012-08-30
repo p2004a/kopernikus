@@ -10,7 +10,9 @@
    */
   
   // jeśli ip nie pasuje badz użytkownik dopiero wszedł, logujemy jako gościa
-  if (!isset($_SESSION['user_id']) || $_SESSION['ip'] != $_SERVER['REMOTE_ADDR']) {
+  if (!isset($_SESSION['user_id']) 
+   || $_SESSION['ip'] != $_SERVER['REMOTE_ADDR']
+   || 1 != count(db_query("SELECT user_id FROM users WHERE user_id = '{$_SESSION['user_id']}'"))) {
     $_SESSION['user_id'] = db_query("SELECT user_id FROM users WHERE login = 'guest'")[0]['user_id'];
     $_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
   }
@@ -23,8 +25,7 @@
    * @return zwraca prawde gdy zalogowano i false w przecinwym wypadku
    */
   function auth_log_in($login, $password) {
-    if (!preg_match("/^[A-Za-z0-9_]{3,19}$/", $login)) {
-      echo "preg_match";
+    if (!is_string($login) || !is_string($password) || !preg_match("/^[A-Za-z0-9_]{3,19}$/", $login)) {
       return false;
     }
     $password = hash("sha512", $password);
@@ -33,7 +34,6 @@
       $_SESSION['user_id'] = $res[0]['user_id'];
       return true;
     }
-    echo "didn't find user";
     return false;
   }
   
@@ -53,5 +53,17 @@
    */
   function auth_who() {
     return db_query("SELECT user_id, name, login FROM users WHERE user_id = '{$_SESSION['user_id']}'")[0];
+  }
+  
+  /**
+   * @brief Sprawdza czy użytkownik moze wykonać akcję
+   *
+   * @return odpowiadajaca wartośc logiczną
+   */
+  function auth_check_permission($privilege) {
+    if (1 == count(db_query("SELECT * from group_permissions WHERE group_id = (SELECT group_id FROM users WHERE user_id = '{$_SESSION['user_id']}') AND privilege_id = (SELECT privilege_id FROM privileges WHERE name = '" . db_esc_str($privilege) . "')"))) {
+      return true;
+    }
+    return false;
   }
 ?>
