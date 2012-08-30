@@ -26,8 +26,8 @@ CREATE TABLE group_permissions (
 
 INSERT INTO groups (name) VALUES ('Administrators');
 INSERT INTO groups (name) VALUES ('Guests');
-INSERT INTO users (group_id, login, pass, name) VALUES ((SELECT group_id FROM groups WHERE name = 'Administrators'), 'admin', SHA2('admin', 512), 'Administrator');
-INSERT INTO users (group_id, login, pass, name) VALUES ((SELECT group_id FROM groups WHERE name = 'Guests'), 'guest', SHA2('guest', 512), 'Gość');
+INSERT INTO users (group_id, login, pass, name) VALUES ((SELECT group_id FROM groups WHERE name = 'Administrators'), 'admin', 'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec', 'Administrator');
+INSERT INTO users (group_id, login, pass, name) VALUES ((SELECT group_id FROM groups WHERE name = 'Guests'), 'guest', 'b0e0ec7fa0a89577c9341c16cff870789221b310a02cc465f464789407f83f377a87a97d635cac2666147a8fb5fd27d56dea3d4ceba1fc7d02f422dda6794e3c', 'Gość');
 INSERT INTO privileges (name, description) VALUES ('EditUsers', 'Dodawanie, usuwanie i edytowanie użytkowników');
 INSERT INTO group_permissions (group_id, privilege_id) VALUES ((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'EditUsers'));
 
