@@ -51,7 +51,7 @@
   } else {
     $subpage = $core_params[0];
   }
-  array_splice($core_params, 0, 1);
+  array_shift($core_params);
   require("./subpages/" . $subpage . ".php");
   if (!function_exists("main")) {
     core_error("Found subpage but cannot find main function.");

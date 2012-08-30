@@ -20,7 +20,7 @@
         new HTMLTag("br"),
         new HTMLTag("a", array("href" => "panel/logout"), "wyloguj"),
         new HTMLTag("div", array("class" => "menufooter"))
-      )));
+      )), false);
       return new HTMLFromString("<h2>Witaj w panelu.</h2>");
     } else {
       return form_create("panel", array("login" => "/./", "password" => "/./"), new HTMLFromString('

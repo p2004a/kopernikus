@@ -87,25 +87,26 @@
     * 
     * Służy do dodawania objektów do wewnętrznych tablic, przyjmuje HTMLObject
     * które są po prostu dodawane, stringi które są oblekane w HTMLString oraz
-    * tablice które są rekurencyjnie rozwijane
+    * tablice które są rekurencyjnie rozwijane.
     * @param array &$what Do jakiej tablicy chcemy dołączyć objekt.
     * @param array $object Objekt jaki dodajemy do tablicy
+    * @param $back Czy dodajemy na koniec czy na poczatek tablicy
     * @see HTMLContainer::add()
     * @see HTMLPage::addBody()
     * @see HTMLPage::addHead()
     */
-    protected function add_to(array &$what, $object) {
+    protected function add_to(array &$what, $object, $back = true) {
       $error_msg = "Wrong agrument type passed to " . get_class($this) . "->add_to()"; 
       if (!is_array($object)) {
         $object = array($object);
       }
       foreach ($object as $obj) {
+        if (is_string($obj)) $obj = new HTMLString($obj);
         if ($obj instanceof HTMlObject) {
-          array_push($what, $obj);
-        } elseif (is_string($obj)) {
-          array_push($what, new HTMLString($obj));
+          if ($back) array_push($what, $obj);
+          else array_unshift($what, $obj);
         } elseif (is_array($obj)) {
-          $this->add_to($what, $obj); 
+          $this->add_to($what, $obj, $back); 
         } else {
           core_error($error_msg);
         }
@@ -120,8 +121,8 @@
       return $str_out;
     }
     
-    public function &add($object) {
-      $this->add_to($this->interior, $object);
+    public function &add($object, $back = true) {
+      $this->add_to($this->interior, $object, $back);
       return $this;
     }
 
@@ -183,13 +184,13 @@
       $this->html_head = array();
     }
     
-    public function &add($object) {
+    public function &add($object, $back = true) {
       core_warning("add() on HTMLPage object has no efect.");
       return $this;
     }
 
-    public function &addBody($object) {
-      $this->add_to($this->html_body, $object);
+    public function &addBody($object, $back = true) {
+      $this->add_to($this->html_body, $object, $back);
       return $this;
     }
     
