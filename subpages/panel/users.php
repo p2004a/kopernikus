@@ -8,7 +8,7 @@
       if(!auth_check_permission("EditUsers")) return panel_no_acces_info();
       
       $table = new HTMLTag("table", array("width" => "100%"), new HTMLFromString('
-          <tr><th>Id</th><th>Nazwa</th><th>Login</th><th>Grupa</th><th>e-mail</th></tr>
+          <tr><th>Id</th><th>Nazwa</th><th>Login</th><th>Grupa</th><th>e-mail</th><th>Akcje</th></tr>
       '));
       
       $users = db_query("SELECT users.user_id, users.name, users.login, groups.name AS 'group_name', users.email FROM users INNER JOIN groups ON users.group_id = groups.group_id");
@@ -18,6 +18,7 @@
         foreach ($user as $elem) {
           $tr->add(new HTMLTag("td", array(), strval($elem)));
         }
+        $tr->add(new HTMLTag("td", array(), new HTMLTag('a', array("href" => "panel/users/del/{$user['user_id']}"), "usuń")));
         $table->add($tr);
       }
       
@@ -72,7 +73,7 @@
       if (panel_want_name($params)) return false;
       if(!auth_check_permission("EditUsers")) return panel_no_acces_info();
       
-      if (!empty($params) && is_numeric($params[0])) {
+      if (!empty($params) && is_numeric($params[0]) && 1 == count(db_query("SELECT * FROM users WHERE user_id = '" . intval($params[0]) . "'"))) {
         $user_id = intval($params[0]);
       } else {
         return users_view(array());
@@ -92,8 +93,9 @@
           return users_view(array());
         }
       } else {
+        $user = db_query("SELECT name FROM users WHERE user_id = '{$user_id}'");
         return form_create("panel_users_del", "panel/users/del/{$user_id}", array("del" => "/./"), new HTMLFromString('
-          Czy na pewno chcesz usunąć użytkownika?<br />
+          Czy na pewno chcesz usunąć użytkownika <b>' . $user[0]['name'] . '</b>?<br />
           <input type="submit" name="del" value="Tak" />
           <input type="submit" name="del" value="Nie" />
         '));
