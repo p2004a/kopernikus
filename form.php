@@ -16,10 +16,10 @@
     * @param $code kod formularza, string albo HTMLObject
     * @return kod rozmularza
     */
-  function form_create($action, $fields, $code) {
+  function form_create($form_name, $action, $fields, $code) {
     $csrf_field = uniqid();
     $fields['csrf_field'] = "/$csrf_field/";
-    $_SESSION['forms'][$action] = $fields;
+    $_SESSION['forms'][$form_name] = $fields;
     return new HTMLTag("form", array("action" => $action, "method" => "POST"), array(
       new HTMLTag("input", array("type" => "hidden", "value" => $csrf_field, "name" => "csrf_field")),
       $code
@@ -32,19 +32,19 @@
     * @param $action to samo co action w <form>
     * @return fałsz jeśli błedy w przesłanym formularzu albo tablica asocjacyjna z formularzem
     */
-  function form_load($action) {
-    if (!isset($_SESSION['forms'][$action])) {
+  function form_load($form_name) {
+    if (!isset($_SESSION['forms'][$form_name])) {
       return false;
     }
-    foreach ($_SESSION['forms'][$action] as $name => $value) {
+    foreach ($_SESSION['forms'][$form_name] as $name => $value) {
       if (!isset($_POST[$name]) 
        || !is_string($_POST[$name]) 
        || !preg_match($value, $_POST[$name])) {
-        unset($_SESSION['forms'][$action]);
+        unset($_SESSION['forms'][$form_name]);
         return false;
       }
     }
-    unset($_SESSION['forms'][$action]);
+    unset($_SESSION['forms'][$form_name]);
     return $_POST;
   }
 ?>

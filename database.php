@@ -93,7 +93,7 @@
       core_error("Executed incorrect query to databese.");
     }
     $out = true;
-    if (preg_match("/^SELECT.*$/", $query)) {
+    if (preg_match("/^SELECT.*$/", str_replace("\n", " ", $query))) {
       $out = array();
       while ($row = mysql_fetch_assoc($result)) {
         array_push($out, $row);

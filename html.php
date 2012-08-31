@@ -13,7 +13,7 @@
    * @brief Tablica zawierająca tagi które w html'u nie mają tagów zamykających
    */
   $tags_without_ending_tags = array("area", "base", "basefont", "br", "hr", 
-   "img", "input", "isindex", "link", "meta", "nextid", "option", "param");
+   "img", "input", "isindex", "link", "meta", "nextid", "param");
 
   interface HTMLObject {
    /**

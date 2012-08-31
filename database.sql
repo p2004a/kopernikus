@@ -7,6 +7,15 @@ CREATE TABLE users (
   email CHAR(40)
 );
 
+CREATE TABLE deleted_users (
+  user_id INT NOT NULL PRIMARY KEY,
+  group_id INT,
+  login CHAR(20),
+  pass CHAR(128),
+  name CHAR(40),
+  email CHAR(40)
+);
+
 CREATE TABLE groups (
   group_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name CHAR(50)

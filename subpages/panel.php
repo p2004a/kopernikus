@@ -35,7 +35,7 @@
   }
   
   function panel_no_acces_info() {
-    return new HTMLFromString("<h1>Nie masz uprawnień do ogladania tej strony.</h1>");
+    return new HTMLFromString("<h2>Nie masz uprawnień do ogladania tej strony.</h2>");
   }
   
   function panel_panel_box() {
@@ -82,7 +82,7 @@
   }
 
   function panel_main($params) {
-    if ($form = form_load("panel")) {
+    if ($form = form_load("panel_login")) {
       auth_log_in($form['login'], $form['password']);
     }
     
@@ -102,9 +102,9 @@
         return new HTMLFromString("<h1>Panel</h1>");
       }
     } else {
-      return form_create("panel", array("login" => "/./", "password" => "/./"), new HTMLFromString('
+      return form_create("panel_login", "panel", array("login" => "/./", "password" => "/./"), new HTMLFromString('
         Login <input type="text" name="login" /><br />
-        Hasło <input type="text" name="password" /><br />
+        Hasło <input type="password" name="password" /><br />
         <input type="submit" value="zaloguj" />
       '));
     }
