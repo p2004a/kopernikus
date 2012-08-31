@@ -80,7 +80,7 @@
       }
       
       if ($form = form_load("panel_users_del")) {
-        if ($form['del'] = "Tak") {
+        if ($form['del'] == "Tak") {
           db_connect();
           $u = db_query("SELECT user_id FROM users WHERE login = 'admin' OR login = 'guest'");
           if ($user_id != $u[0]['user_id'] && $user_id != $u[1]['user_id']) {

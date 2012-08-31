@@ -550,7 +550,7 @@
     
     protected function cdata($parser, $data) {
       $data = str_replace("_-=+*^%$#@!;:", "&", $data);
-      $data = ltrim($data) . (strlen($data) != strlen(ltrim($data)) ? " " : "");
+      $data = (strlen($data) != strlen(ltrim($data)) ? " " : "") . ltrim($data);
       $data = rtrim($data) . (strlen($data) != strlen(rtrim($data)) ? " " : "");
       if (trim($data) != "") {
         end($this->tag_stack)->add($data);
