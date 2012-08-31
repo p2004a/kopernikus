@@ -37,20 +37,17 @@
   function panel_no_acces_info() {
     return new HTMLFromString("<h1>Nie masz uprawnień do ogladania tej strony.</h1>");
   }
-
-  function main($params) {
+  
+  function panel_panel_box() {
     global $html;
     
-    if ($form = form_load("panel")) {
-      auth_log_in($form['login'], $form['password']);
-    }
-    
-    if (isset($params[0]) && $params[0] == "logout") {
-      auth_log_out();
-    }
+    static $loaded = false;
     
     $user = auth_who();
-    if ($user['login'] != "guest") {
+    
+    if (!$loaded && $user['login'] != "guest") {
+      $loaded = true;
+      
       $html->select("leftside")->add(new HTMLFromString('
         <div class="menu">
           <h1>Panel</h1>
@@ -81,6 +78,21 @@
       }
       
       unset($GLOBALS['panel_subpanels_scan']);
+    }
+  }
+
+  function panel_main($params) {
+    if ($form = form_load("panel")) {
+      auth_log_in($form['login'], $form['password']);
+    }
+    
+    if (isset($params[0]) && $params[0] == "logout") {
+      auth_log_out();
+    }
+    
+    $user = auth_who();
+    if ($user['login'] != "guest") {
+      panel_panel_box();
       
       if (isset($params[0]) && file_exists("./subpages/panel/{$params[0]}.php")) {
         $subpanel = array_shift($params);

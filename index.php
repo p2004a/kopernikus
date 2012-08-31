@@ -53,10 +53,16 @@
   }
   array_shift($core_params);
   require("./subpages/" . $subpage . ".php");
-  if (!function_exists("main")) {
-    core_error("Found subpage but cannot find main function.");
+  if (!function_exists("{$subpage}_main")) {
+    core_error("Found subpage but cannot find {subpage}_main function.");
   }
-  $html->select("content")->add(main($core_params));
+  $html->select("content")->add(call_user_func("{$subpage}_main", $core_params));
+  
+  // Load panel box
+  if (file_exists("./subpages/panel.php")) {
+    require_once("./subpages/panel.php");
+    panel_panel_box();
+  }
   
   core_render();
 ?>
