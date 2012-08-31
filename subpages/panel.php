@@ -3,7 +3,7 @@
     $funcs = get_defined_functions();
     $users_func = array();
     foreach ($funcs['user'] as $func) {
-      if (preg_match("/^{$subpanel}_.*$/", $func)) {
+      if (preg_match("/^{$subpanel}_.*$/", $func) && $func != "{$subpanel}_main") {
         array_push($users_func, substr($func, strlen($subpanel) + 1));
       }
     }
@@ -17,11 +17,15 @@
     }
     
     if (empty($params) || !function_exists("{$subpanel}_{$params[0]}")) {
-      $panel_page->add(new HTMLFromString("<h1>{$subpanel} panel</h1>"));
-    } else {
-      $subsubpanel = array_shift($params);
-      $panel_page->add(call_user_func("{$subpanel}_{$subsubpanel}", $params));
+      if (!function_exists("{$subpanel}_main")) {
+        $panel_page->add(new HTMLFromString("<h1>{$subpanel} panel</h1>"));
+        return $panel_page;
+      }
+      $params = array("main");
     }
+    
+    $subsubpanel = array_shift($params);
+    $panel_page->add(call_user_func("{$subpanel}_{$subsubpanel}", $params));
     
     return $panel_page;
   }
