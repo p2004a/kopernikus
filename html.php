@@ -566,6 +566,34 @@
       parent::__construct($file, $objectid);
     }
   }
+  
+  class HTMLCKEditor extends HTMLSimpleObject {
+    private $name;
+    private $width;
+    private $height;
+    private $toolbar;
+    
+    public function __construct($name, $toolbar = "Basic", $width = "100%", $height = "300") {
+      $this->name = $name;
+      $this->width = $width;
+      $this->height = $height;
+      $this->toolbar = $toolbar;
+      
+      if (!isset($GLOBALS['ckeditor_js_loaded'])) {
+        $GLOBALS['ckeditor_js_loaded'] = true;
+        $GLOBALS['html']->loadJS("ckeditor/ckeditor.js");
+      }
+    }
+    
+    public function render_visible() {
+      $out = new HTMLContainer(array(
+        new HTMLTag("textarea", array("name" => $this->name, "id" => $this->name, "width" => $this->width, "height" => $this->height)),
+        new HTMLTag("script", array("type" => "text/javascript"), "CKEDITOR.replace('{$this->name}',{contentsCss:'assets/output_xhtml.css',toolbar:'{$this->toolbar}'});")
+      ));
+      
+      return $out->render();
+    }
+  }
 
   $html = new HTMLPage();
 ?>

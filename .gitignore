@@ -3,3 +3,5 @@ tmp/*
 html
 latex
 config.php
+ckeditor/*
+!ckeditor/config.js
