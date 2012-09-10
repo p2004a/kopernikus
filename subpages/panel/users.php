@@ -19,6 +19,7 @@
           $tr->add(new HTMLTag("td", array(), strval($elem)));
         }
         $tr->add(new HTMLTag("td", array(), new HTMLTag('a', array("href" => "panel/users/del/{$user['user_id']}"), "usuń")));
+        $tr->add(new HTMLTag("td", array(), new HTMLTag('a', array("href" => "panel/users/edit/{$user['user_id']}"), "edytuj")));
         $table->add($tr);
       }
       
@@ -33,13 +34,12 @@
       if ($form && $form['password'] == $form['password_check']) {
         if (0 == count(db_query("SELECT * FROM users WHERE login = '{$form['login']}'
           UNION SELECT * FROM users WHERE name = '{$form['name']}'
-          UNION SELECT * FROM deleted_users WHERE login = '{$form['login']}'
          "))) {
           $pass = hash("sha512", $form['password']);
           db_query("INSERT INTO users (login, group_id, pass, name, email) VALUES ('{$form['login']}', '{$form['group']}', '{$pass}', '{$form['name']}', '{$form['email']}')");
           return new HTMLFromString("<h3>Stworzono użytkownika</h3>");
         } else {
-          return new HTMLFromString("<h3>Istnieje lub już kiedyś istniał użytkownik o rządanym loginie lub nazwie</h3>");
+          return new HTMLFromString("<h3>Istnieje użytkownik o żądanym loginie lub nazwie</h3>");
         }
       } else {
         $groups = db_query("SELECT * FROM groups");
@@ -62,6 +62,61 @@
           Re-Hasło <input type="password" name="password_check" /><br />
           Nazwa <input type="text" name="name" /><br />
           Email <input type="text" name="email" /><br />
+          Grupa 
+        '), $select, new HTMLFromString('
+          <br /><input type="submit" />
+        '))));
+      }
+    }
+    
+    function users_edit($params) {
+      if (panel_want_name($params)) return false;
+      if(!auth_check_permission("EditUsers")) return panel_no_acces_info();
+      
+      if (!empty($params) && is_numeric($params[0]) && 1 == count(db_query("SELECT * FROM users WHERE user_id = '" . intval($params[0]) . "'"))) {
+        $user_id = intval($params[0]);
+      } else {
+        return users_view(array());
+      }
+      
+      $user = db_query("SELECT * FROM users WHERE user_id = $user_id");
+      $user = $user[0];
+      
+      $form = form_load("panel_user_edit");
+      if ($form && $form['password'] == $form['password_check']) {
+        if ($form['password'] == "old_password") {
+          $pass = $user['pass'];
+        } else {
+          $pass = hash("sha512", $form['password']);
+        }
+        db_query("UPDATE users SET login = '{$form['login']}', pass = '$pass', name = '{$form['name']}', email = '{$form['email']}', group_id = {$form['group']} WHERE user_id = $user_id");
+        return new HTMLFromString("<h3>Zedytowano użytkownika</h3>");
+      } else {
+      
+        $groups = db_query("SELECT * FROM groups");
+        
+        $select = new HTMLTag("select", array("name" => "group"));
+        foreach ($groups as $group) {
+          if ($group['group_id'] == $user['group_id']) {
+            $select->add(new HTMLTag("option", array("value" => $group['group_id'], "selected" => "selected"), $group['name']));
+          } else {
+            $select->add(new HTMLTag("option", array("value" => $group['group_id']), $group['name']));
+          }
+        }
+        
+        return form_create("panel_user_edit", "panel/users/edit/$user_id", array(
+          "login" => "/^[A-Za-z0-9_]{3,19}$/",
+          "password" => "/./",
+          "password_check" => "/./",
+          "name" => "/^[\.-_a-zA-ZąęćżźńłóśĄĆĘŁŃÓŚŹŻ\s]{6,39}$/",
+          "email" => "/^[A-Za-z0-9\.@_-]{6,39}$/",
+          "group" => "/^[0-9]{1,8}$/"
+        ), new HTMLContainer(array(new HTMLFromString('
+          Login <input type="text" name="login" value="' . $user['login'] . '" /><br />
+          Hasło <input type="password" name="password" value="old_password" /><br />
+          Re-Hasło <input type="password" name="password_check" value="old_password" /><br />
+          Nazwa <input type="text" name="name" value="' . $user['name'] . '" /><br />
+          Email <input type="text" name="email" value="' . $user['email'] . '" /><br />
           Grupa 
         '), $select, new HTMLFromString('
           <br /><input type="submit" />
