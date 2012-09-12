@@ -9,6 +9,8 @@
    * @file core.php
    */
 
+  $core_debug = true;
+
   if (!in_array($_SERVER['REQUEST_METHOD'], array("GET", "POST"))) {
     die();
   }
@@ -47,9 +49,15 @@
    * @param $str Zawiera treść błędu którą należy obwieścić użytkownikowi.
    */
   function core_error($str) {
+    global $core_debug;
     $htmlerror = new HTMLPage();
     $htmlerror->addBody(new HTMLString("ERROR: $str"));
     echo $htmlerror->render();
+    if ($core_debug) {
+      echo "<pre>";
+      debug_print_backtrace();
+      echo "</pre>";
+    }
     exit();
   }
   

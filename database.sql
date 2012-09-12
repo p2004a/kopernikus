@@ -33,6 +33,15 @@ CREATE TABLE group_permissions (
   privilege_id INT
 );
 
+CREATE TABLE news (
+  news_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id INT,
+  date DATE,
+  title CHAR(200),
+  text TEXT,
+  image MEDIUMBLOB
+);
+
 INSERT INTO groups (name) VALUES ('Administrators');
 INSERT INTO groups (name) VALUES ('Guests');
 INSERT INTO users (group_id, login, pass, name) VALUES ((SELECT group_id FROM groups WHERE name = 'Administrators'), 'admin', 'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec', 'Administrator');
