@@ -32,7 +32,7 @@
       
       if ($form = form_load("panel_news_add")) {
         $user = auth_who();
-        db_query("INSERT INTO news (user_id, date, title, text) VALUES ({$user['user_id']}, '" . sprintf("%04d-%02d-%02d", $form['year'], $form['month'], $form['day']) . "', '" . db_esc_str(htmlspecialchars($form['title'])) . "', '" . db_esc_str($form['data']) . "')");
+        db_query("INSERT INTO news (user_id, date, title, text, short_text) VALUES ({$user['user_id']}, '" . sprintf("%04d-%02d-%02d", $form['year'], $form['month'], $form['day']) . "', '" . db_esc_str(htmlspecialchars($form['title'])) . "', '" . db_esc_str($form['data']) . "', '" . db_esc_str($form['data_short']) . "')");
         return new HTMLFromString("<h3>Dodano newsa.</h3>");
       } else {
         
@@ -63,6 +63,7 @@
         
         return form_create("panel_news_add", "panel/news/add", array(
           "title" => "/./",
+          "data_short" => "/./",
           "data" => "/./",
           "day" => "/^[0-9]{1,2}$/",
           "month" => "/^[0-9]{1,2}$/",
@@ -72,7 +73,8 @@
           "Miesiąc ", $select_month,
           "Dzień ", $select_day,
           new HTMLFromString('<br />Tytuł <input type="text" style="width:500px;" name="title" /><br />'),
-          new HTMLCKEditor("data", "News"),
+          'Skrócona treść<br />', new HTMLCKEditor("data_short", "News"),
+          'Pełna treść<br />', new HTMLCKEditor("data", "News"),
           new HTMLFromString('
             <br />Obrazek <input type="file" name="image" size="40" /><br />
             <input type="submit" />

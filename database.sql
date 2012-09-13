@@ -36,9 +36,12 @@ CREATE TABLE group_permissions (
 CREATE TABLE news (
   news_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   user_id INT,
+  sign CHAR(40),
+  state ENUM('show', 'hide', 'not_accepted'),
   date DATE,
   title CHAR(200),
-  text TEXT,
+  short_text TEXT,
+  text MEDIUMTEXT,
   image MEDIUMBLOB
 );
 
