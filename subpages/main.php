@@ -2,6 +2,8 @@
   function main_main($params) {
   
     $months = array(1 => "stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "września", "października", "listopada", "grudnia");
+    $months2 = array(1 => "styczeń", "luty", "marzec", "kwiecień", "maj", "czerwiec", "lipiec", "sierpień", "wrzesień", "październik", "listopad", "grudzień");
+    $weekdays = array(1 => "poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota", "niedziela");
   
     if (isset($params[0]) && $params[0] == "view") {
       if (isset($params[1]) && is_numeric($params[1]) && 1 == count(db_query("SELECT * FROM news WHERE news_id = '" . intval($params[1]) . "'"))) {
@@ -22,27 +24,49 @@
         
       } else {
         
-        $table = new HTMLTag("table", array("width" => "100%"), new HTMLFromString('
-            <tr><th>Autor</th><th>Data</th><th>Tytuł</th><th>Akcje</th></tr>
-        '));
+        $out = new HTMLFromFile("templates/subpage.html");
+        $out->select(".title")->add("Archiwum wiadomości");
         
         $newss = db_query("SELECT news.news_id, res.name, news.date, news.title FROM news INNER JOIN (SELECT user_id, name FROM users UNION SELECT user_id, name FROM deleted_users) AS res ON news.user_id = res.user_id ORDER BY news.date DESC");
         
+        $ul = new HTMLTag("ul");
         foreach ($newss as $news) {
-          $tr = new HTMLTag("tr");
-          foreach ($news as $key => $elem) {
-            if ($key == "news_id") continue;
-            $tr->add(new HTMLTag("td", array(), strval($elem)));
-          }
-          $tr->add(new HTMLTag("td", array(), new HTMLTag('a', array("href" => "main/view/{$news['news_id']}"), "zobacz")));
-          $table->add($tr);
+          $t = strtotime($news['date']);
+          $li = new HTMLTag("li", array(), array(
+            new HTMLTag('a', array("href" => "main/view/{$news['news_id']}"), new HTMLFromString("<strong>{$news['title']}</strong>")),
+            sprintf(" - %s %s %sr. | %s", date("j", $t), $months[intval(date("n", $t))], date("Y", $t), $news['name'])
+          ));
+          $ul->add($li);
         }
         
-        return $table;
+        $out->select(".text")->add($ul);
+        
+        return $out;
         
       }
     } else {
       $content = new HTMLFromFile("templates/news.html");
+      
+      $infos = db_query("SELECT * FROM view_interestig");
+      $ul = new HTMLTag("ul");
+      foreach ($infos as $info) {
+        $t = strtotime($news['date']);
+        $li = new HTMLTag("li", array(), array(
+          new HTMLTag('a', array("href" => $info['url'], "target" => $info['target']), $info['title']),
+        ));
+        $ul->add($li);
+      }
+      $content->select("vitalnews")->add($ul);
+      
+      
+      $content->select("date")->add(sprintf("%s, %s %s %sr.", $weekdays[date("N")], date("j"), $months2[intval(date("n"))], date("Y")));
+      
+      $names = db_query("SELECT nameday FROM nameday WHERE month = " . date("n") . " AND day = " . date("j"));
+      $names = explode("|", $names[0]['nameday']);
+      $n1 = rand(0, count($names) - 1);
+      while (($n2 = rand(0, count($names) - 1)) == $n1) {}
+      $content->select("names")->add(sprintf("%s i %s", $names[$n1], $names[$n2]));
+      
       $newss = db_query("SELECT res.name, news.news_id, news.date, news.title, news.short_text, news.image FROM news INNER JOIN (SELECT user_id, name FROM users UNION SELECT user_id, name FROM deleted_users) AS res ON news.user_id = res.user_id ORDER BY news.date DESC LIMIT 5");
       
       $i = 0;

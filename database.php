@@ -51,7 +51,8 @@
     $db_selected = @mysql_select_db($conf_db['dbname'], $db_db);
     if (!$db_selected) {
       core_error("Couldn't select database.");
-    } 
+    }
+    db_query('SET NAMES utf8');
   }
   
   /**

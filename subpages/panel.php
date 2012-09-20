@@ -8,11 +8,11 @@
       }
     }
     
-    $panel_page = new HTMLContainer(new HTMLTag("div", array("id" => "subpanel_menu", "style" => "border: 1px solid black;"), array()), "panel_container");
+    $panel_page = new HTMLContainer(new HTMLTag("div", array("id" => "subpanel_menu"), array()), "panel_container");
     
     foreach ($users_func as $func) {
       if ($name = call_user_func("{$subpanel}_{$func}", "name")) {
-        $panel_page->select("subpanel_menu")->add(new HTMLTag("a", array("href" => "panel/$subpanel/$func", "style" => "margin-right: 10px"), $name));
+        $panel_page->select("subpanel_menu")->add(new HTMLTag("a", array("href" => "panel/$subpanel/$func"), $name));
       }
     }
     
