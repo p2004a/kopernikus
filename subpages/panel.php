@@ -51,8 +51,10 @@
       $html->select("leftside")->add(new HTMLFromString('
         <div class="menu">
           <h1>Panel</h1>
-          Zalogowany jako:<br />
-          <b>' . $user['name'] . '</b><br />
+          <p>
+            Zalogowany jako:<br />
+            <b>' . $user['name'] . '</b><br />
+          </p>
           <ul id="panel_menu">
             <li><a href="panel/logout">Wyloguj</a></li>
           </ul>
