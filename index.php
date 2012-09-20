@@ -47,16 +47,27 @@
     array_push($core_params, "main");
   }
   if (!file_exists("./subpages/" . $core_params[0] . ".php")) {
-    $subpage = "no_page";
+    $subpage_content = db_query("SELECT * FROM subpages WHERE name = '{$core_params[0]}'");
+    if (count($subpage_content) > 0) {
+      $out = new HTMLFromFile("templates/subpage.html");
+      $out->select(".title")->add($subpage_content[0]['title']);
+      $out->select(".text")->add(new HTMLFromString($subpage_content[0]['text']));
+      $html->select("content")->add($out);
+      $subpage_file = false;
+    } else {
+      $subpage_file = "no_page";
+    }
   } else {
-    $subpage = $core_params[0];
+    $subpage_file = $core_params[0];
   }
-  array_shift($core_params);
-  require("./subpages/" . $subpage . ".php");
-  if (!function_exists("{$subpage}_main")) {
-    core_error("Found subpage but cannot find {subpage}_main function.");
+  if ($subpage_file) {
+    array_shift($core_params);
+    require("./subpages/" . $subpage_file . ".php");
+    if (!function_exists("{$subpage_file}_main")) {
+      core_error("Found subpage but cannot find {subpage}_main function.");
+    }
+    $html->select("content")->add(call_user_func("{$subpage_file}_main", $core_params));
   }
-  $html->select("content")->add(call_user_func("{$subpage}_main", $core_params));
   
   // Load panel box
   if (file_exists("./subpages/panel.php")) {

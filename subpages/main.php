@@ -50,7 +50,6 @@
       $infos = db_query("SELECT * FROM view_interestig");
       $ul = new HTMLTag("ul");
       foreach ($infos as $info) {
-        $t = strtotime($news['date']);
         $li = new HTMLTag("li", array(), array(
           new HTMLTag('a', array("href" => $info['url'], "target" => $info['target']), $info['title']),
         ));
