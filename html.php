@@ -296,7 +296,7 @@
         }
         if ($this->getAttribute($e[0]) == $e[1]) {
           if ($this->getAttribute("id") === false) {
-            $this->setAttribute("id", uniqid());
+            $this->setAttribute("id", "id_" . uniqid());
           }
           return $this;
         }
