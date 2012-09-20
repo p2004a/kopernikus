@@ -5,7 +5,7 @@ CREATE TABLE users (
   pass CHAR(128),
   name CHAR(40),
   email CHAR(40)
-);
+) CHARACTER SET utf8 COLLATE utf8_polish_ci;
 
 CREATE TABLE deleted_users (
   user_id INT NOT NULL PRIMARY KEY,
@@ -14,24 +14,24 @@ CREATE TABLE deleted_users (
   pass CHAR(128),
   name CHAR(40),
   email CHAR(40)
-);
+) CHARACTER SET utf8 COLLATE utf8_polish_ci;
 
 CREATE TABLE groups (
   group_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name CHAR(50)
-);
+) CHARACTER SET utf8 COLLATE utf8_polish_ci;
 
 CREATE TABLE privileges (
   privilege_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name CHAR(50),
   description VARCHAR(500)
-);
+) CHARACTER SET utf8 COLLATE utf8_polish_ci;
 
 CREATE TABLE group_permissions (
   permission_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   group_id INT,
   privilege_id INT
-);
+) CHARACTER SET utf8 COLLATE utf8_polish_ci;
 
 CREATE TABLE news (
   news_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -43,7 +43,7 @@ CREATE TABLE news (
   short_text TEXT,
   text MEDIUMTEXT,
   image MEDIUMBLOB
-);
+) CHARACTER SET utf8 COLLATE utf8_polish_ci;
 
 INSERT INTO groups (name) VALUES ('Administrators');
 INSERT INTO groups (name) VALUES ('Guests');
