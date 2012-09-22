@@ -47,6 +47,8 @@
     } else {
       $content = new HTMLFromFile("templates/news.html");
       
+      db_connect();
+      
       $infos = db_query("SELECT * FROM view_interestig");
       $ul = new HTMLTag("ul");
       foreach ($infos as $info) {
@@ -67,6 +69,8 @@
       $content->select("names")->add(sprintf("%s i %s", $names[$n1], $names[$n2]));
       
       $newss = db_query("SELECT res.name, news.news_id, news.date, news.title, news.short_text, news.image FROM news INNER JOIN (SELECT user_id, name FROM users UNION SELECT user_id, name FROM deleted_users) AS res ON news.user_id = res.user_id ORDER BY news.date DESC LIMIT 5");
+      
+      db_close();
       
       $i = 0;
       foreach ($newss as $news) {

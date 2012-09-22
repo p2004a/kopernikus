@@ -16,12 +16,7 @@
   if (isset($db_login) && isset($db_pass) && isset($db_server) && isset($db_database)) {
     file_put_contents("config.php", "<?php \$conf_db = array('username' => '$db_login', 'password' => '$db_pass', 'dbname' => '$db_database', 'hostname' => '$db_server'); ?>");
     require("config.php");
-    $queries = explode(";", file_get_contents("database.sql"));
-    foreach ($queries as $query) {
-      if (trim($query) != "") {
-        db_query($query);
-      }
-    }
+    db_query(file_get_contents("database.sql"), true);
     $html->addBody(new HTMLFromString('<h1>Instalacja zakońcona powodzeniem. Odśwież stronę.</h1>'));
   } else {
     $html->addBody(new HTMLFromString('

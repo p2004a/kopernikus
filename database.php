@@ -43,16 +43,14 @@
       return;
     }
     ++$db_num_connections;
-    $db_db = @mysql_connect($conf_db['hostname'], $conf_db['username'], 
-     $conf_db['password']);
+    $db_db = @mysqli_connect($conf_db['hostname'], $conf_db['username'], 
+     $conf_db['password'], $conf_db['dbname']);
     if (!$db_db) {
-      core_error("Couldn't connect to database.");
+      core_error("Couldn't connect to database. " . mysqli_connect_error());
     }
-    $db_selected = @mysql_select_db($conf_db['dbname'], $db_db);
-    if (!$db_selected) {
-      core_error("Couldn't select database.");
+    if (!@mysqli_set_charset($db_db, "utf8")) {
+      core_error("Couldn't load character set utf8. " . mysqli_error($db_db));
     }
-    db_query('SET NAMES utf8');
   }
   
   /**
@@ -62,7 +60,7 @@
   function db_close() {
     global $db_db;
     if ($db_db != NULL) {
-      @mysql_close($db_db);
+      @mysqli_close($db_db);
       $db_db = NULL;
     } else {
       core_warning("Tried to close not opened connection to the database.");
@@ -80,26 +78,34 @@
    * gdy wywołane jest zapytanie SELECT zwraca jako wynik tablicę talbic
    * asocjacyjnych zawierającą wynik zapytania.
    * @param $query Zapytanie do bazy danych
+   * @param $multi_query true jeśli kilka zapytań odzielonych średnikami
    * @return Wynik zapytania
    */
-  function db_query($query) {
+  function db_query($query, $multi_query = false) {
     global $db_db, $db_num_queries;
     $closed = $db_db == NULL;
     if ($closed) {
       db_connect();
     }
     ++$db_num_queries;
-    $result = @mysql_query($query);
-    if (!$result) {
-      core_error("Executed incorrect query to databese.");
-    }
-    $out = true;
-    if (preg_match("/^SELECT.*$/", str_replace("\n", " ", $query))) {
-      $out = array();
-      while ($row = mysql_fetch_assoc($result)) {
-        array_push($out, $row);
+    if (!$multi_query) {
+      $result = @mysqli_query($db_db, $query);
+      if (!$result) {
+        core_error("Executed incorrect query to databese. " . mysqli_error($db_db));
       }
-      mysql_free_result($result);
+      $out = true;
+      if (preg_match("/^SELECT.*$/", str_replace("\n", " ", $query))) {
+        $out = array();
+        while ($row = mysqli_fetch_assoc($result)) {
+          array_push($out, $row);
+        }
+        mysqli_free_result($result);
+      }
+    } else {
+      $result = @mysqli_multi_query($db_db, $query);
+      if (!$result) {
+        core_error("Executed incorrect multiquery to databese. " . mysqli_error($db_db));
+      }
     }
     if ($closed) {
       db_close();

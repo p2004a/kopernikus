@@ -10,6 +10,10 @@
    */
 
   $core_debug = true;
+  
+  if ($core_debug) {
+    $core_start_time = microtime(true);
+  }
 
   if (!in_array($_SERVER['REQUEST_METHOD'], array("GET", "POST"))) {
     die();
@@ -27,7 +31,7 @@
     $core_params = explode("/", $_GET['f']);
     if (end($core_params) == "") array_pop($core_params);
     foreach ($core_params as $elem) {
-      if (!preg_match("/^[a-z0-9_]+$/", $elem)) {
+      if (!preg_match("/^[a-z0-9_]{1,19}$/", $elem)) {
         $core_params = array();
         break;
       }
@@ -80,7 +84,7 @@
    * przez system.
    */
   function core_render() {
-    global $core_warnings, $html;
+    global $core_warnings, $html, $core_debug;
     echo $html->render();
     if (!empty($core_warnings)) {
       echo "\n<!--\n";
@@ -88,6 +92,12 @@
         echo "$str\n";
       }
       echo "-->";
+    }
+    if ($core_debug) {
+      printf('<div style="text-align:center; width:100%%; color:white;">te: %.3fs dbnc: %d dbnq: %d</div>', 
+       microtime(true) - $GLOBALS['core_start_time'], 
+       $GLOBALS['db_num_connections'], 
+       $GLOBALS['db_num_queries']);
     }
   }
   
