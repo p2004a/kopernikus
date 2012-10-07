@@ -133,7 +133,7 @@
     }
     
     public function &select($id) {
-      if ($id == $this->getId()) {
+      if ($id === $this->getId()) {
         return $this;
       }
       foreach ($this->interior as $obj) {
@@ -216,7 +216,7 @@
     }
     
     public function &select($id) {
-      if ($id == $this->getId()) {
+      if ($id === $this->getId()) {
         return $this;
       }
       foreach ($this->html_body as $obj) {
@@ -296,7 +296,7 @@
         }
         if ($this->getAttribute($e[0]) == $e[1]) {
           if ($this->getAttribute("id") === false) {
-            $this->setAttribute("id", "id_" . uniqid());
+            $this->objectid = true;
           }
           return $this;
         }
@@ -369,7 +369,7 @@
     }
     
     public function &select($id) {
-      if ($id == $this->getId()) {
+      if ($id === $this->getId()) {
         return $this;
       }
       $null = new HTMLNull;

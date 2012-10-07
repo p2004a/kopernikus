@@ -2,7 +2,6 @@
   function main_main($params) {
   
     $months = array(1 => "stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "września", "października", "listopada", "grudnia");
-    $months2 = array(1 => "styczeń", "luty", "marzec", "kwiecień", "maj", "czerwiec", "lipiec", "sierpień", "wrzesień", "październik", "listopad", "grudzień");
     $weekdays = array(1 => "poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota", "niedziela");
   
     if (isset($params[0]) && $params[0] == "view") {
@@ -60,7 +59,7 @@
       $content->select("vitalnews")->add($ul);
       
       
-      $content->select("date")->add(sprintf("%s, %s %s %sr.", $weekdays[date("N")], date("j"), $months2[intval(date("n"))], date("Y")));
+      $content->select("date")->add(sprintf("%s, %s %s %sr.", $weekdays[date("N")], date("j"), $months[intval(date("n"))], date("Y")));
       
       $names = db_query("SELECT nameday FROM nameday WHERE month = " . date("n") . " AND day = " . date("j"));
       $names = explode("|", $names[0]['nameday']);
@@ -68,7 +67,7 @@
       while (($n2 = rand(0, count($names) - 1)) == $n1) {}
       $content->select("names")->add(sprintf("%s i %s", $names[$n1], $names[$n2]));
       
-      $newss = db_query("SELECT res.name, news.news_id, news.date, news.title, news.short_text, news.image FROM news INNER JOIN (SELECT user_id, name FROM users UNION SELECT user_id, name FROM deleted_users) AS res ON news.user_id = res.user_id ORDER BY news.date DESC LIMIT 5");
+      $newss = db_query("SELECT res.name, news.news_id, news.date, news.title, news.short_text, news.text, news.image FROM news INNER JOIN (SELECT user_id, name FROM users UNION SELECT user_id, name FROM deleted_users) AS res ON news.user_id = res.user_id ORDER BY news.date DESC LIMIT 5");
       
       db_close();
       
@@ -82,7 +81,11 @@
         $news_html->select(".text")->add($news['short_text']);
         $t = strtotime($news['date']);
         $news_html->select(".time")->add(sprintf("%s %s %sr. | %s", date("j", $t), $months[intval(date("n", $t))], date("Y", $t), $news['name']));
-        $news_html->select(".readmore_a")->setAttribute("href", "main/view/{$news['news_id']}");
+        if (trim(strip_tags($news['text'])) != "") {
+          $news_html->select(".readmore_a")->setAttribute("href", "main/view/{$news['news_id']}");
+        } else {
+          $news_html->select(".readmore")->hide();
+        }
         $content->select("newsbox")->add($news_html);
       }
       return $content;

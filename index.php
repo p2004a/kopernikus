@@ -23,8 +23,8 @@
     if (trim($menu_file_line) == "") continue;
     $elem = explode("|", $menu_file_line);
     if (count($elem) >= 2) {
-      $ul->add(new HTMLTag("li", array(), array(
-        new HTMLTag("a", array("href" => trim($elem[1]), "target" => (count($elem) >= 3 ? trim($elem[2]) : "_self")), trim($elem[0]))
+      $ul->add(new HTMLTag("a", array("href" => trim($elem[1]), "target" => (count($elem) >= 3 ? trim($elem[2]) : "_self")), array(
+        new HTMLTag("li", array(), trim($elem[0]))
       )));
     } else {
       if ($top_menu) {

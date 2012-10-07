@@ -44,7 +44,7 @@ CREATE TABLE news (
   title CHAR(200),
   short_text TEXT,
   text MEDIUMTEXT,
-  image MEDIUMBLOB
+  image CHAR(200)
 ) CHARACTER SET utf8 COLLATE utf8_polish_ci;
 
 CREATE TABLE subpages (
