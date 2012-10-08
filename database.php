@@ -106,6 +106,7 @@
       if (!$result) {
         core_error("Executed incorrect multiquery to databese. " . mysqli_error($db_db));
       }
+      $out = true;
     }
     if ($closed) {
       db_close();

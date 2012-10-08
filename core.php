@@ -25,8 +25,8 @@
   session_save_path("./.sessions/");
   session_start();
 
-  // parsing uri  
-  $core_params;
+  // parsing uri
+  $core_params = array();
   if (isset($_GET['f']) && !is_array($_GET['f'])) {
     $core_params = explode("/", $_GET['f']);
     if (end($core_params) == "") array_pop($core_params);
