@@ -1,1 +1,6 @@
 Very unefficient CMS
+
+- Server must support .htacces files
+- CKEditori is NOT included in this package, so you must download it on your own
+  and put into ckeditor directory.
+- the server MUST be able to create files in root directory
