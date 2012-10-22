@@ -539,6 +539,9 @@
     
     protected function tag_open($parser, $name, $attr) {
       if ($name != 'xmldata') {
+        foreach ($attr as &$val) {
+          $val = str_replace("_-=+*^%$#@!;:", "&", $val);
+        }
         $obj = new HTMLTag($name, $attr);
         end($this->tag_stack)->add($obj);
         array_push($this->tag_stack, $obj);
