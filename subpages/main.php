@@ -13,12 +13,14 @@
       
         $news_html = new HTMLFromFile("templates/single_news.html");
         $news_html->select(".singlenews")->setAttribute("style", "border-top: 1px solid #EBEBEB;");
-        $news_html->select(".readmore")->hide();
+        $news_html->select(".readmore_a")->setAttribute("href", strip_tags($_SERVER['HTTP_REFERER']));
+        $news_html->select(".readmore_a")->clear()->add("Porwót &raquo;");
         
         $news_html->select(".title")->add($news['title']);
         $news_html->select(".text")->add($news['text']);
         $t = strtotime($news['date']);
         $news_html->select(".time")->add(sprintf("%s %s %sr. | %s", date("j", $t), $months[intval(date("n", $t))], date("Y", $t), $news['name']));
+        
         return $news_html;
         
       } else {

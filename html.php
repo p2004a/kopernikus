@@ -125,6 +125,11 @@
       $this->add_to($this->interior, $object, $back);
       return $this;
     }
+    
+    public function &clear() {
+      $this->interior = array();
+      return $this;
+    }
 
     public function __construct($object, $objectid = false) {
       $this->objectid = $objectid;
