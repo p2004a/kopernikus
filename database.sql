@@ -70,12 +70,14 @@ INSERT INTO users (group_id, login, pass, name) VALUES
 ((SELECT group_id FROM groups WHERE name = 'Guests'), 'guest', 'b0e0ec7fa0a89577c9341c16cff870789221b310a02cc465f464789407f83f377a87a97d635cac2666147a8fb5fd27d56dea3d4ceba1fc7d02f422dda6794e3c', 'Gość');
 
 INSERT INTO privileges (name, description) VALUES 
+('EditChanges', 'Zmienianie i ustalanie zmian na następny dzień'),
 ('EditUsers', 'Dodawanie, usuwanie i edytowanie użytkowników'),
 ('EditMenu', 'Edytowanie menu'),
 ('EditSubpages', 'Dodawanie, usuwanie i edytowanie podstron'),
 ('EditViewInteresting', 'Dodawanie, usuwanie i edytowanie elementów w zobacz na stronie głównej');
 
 INSERT INTO group_permissions (group_id, privilege_id) VALUES 
+((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'EditChanges')),
 ((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'EditUsers')),
 ((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'EditMenu')),
 ((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'EditSubpages')),

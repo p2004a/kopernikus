@@ -7,6 +7,7 @@ Dziennik | #
 Sport | #
 
 Aktualności
+Zmiany | changes/
 Konkurs Języka Niemieckiego | #
 Matura 2012 | #
 Matura - kursy | #

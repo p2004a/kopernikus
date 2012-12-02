@@ -11,6 +11,7 @@
    /**
     * @brief Tworzy formularz
     *
+    * @param $form_name nazwa formularza
     * @param $action to samo co action w <form>
     * @param $fields tablica asocjacyjna nazwa => wyrazanie_regularne opisujace pola formularza
     * @param $code kod formularza, string albo HTMLObject
@@ -29,7 +30,7 @@
    /**
     * @brief Ładuje formularz
     *
-    * @param $action to samo co action w <form>
+    * @param $form_name nazwa formularza
     * @return fałsz jeśli błedy w przesłanym formularzu albo tablica asocjacyjna z formularzem
     */
   function form_load($form_name) {
