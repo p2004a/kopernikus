@@ -59,6 +59,8 @@ CREATE TABLE view_interestig (
   url CHAR(200),
   title CHAR(200),
   target CHAR(10)
+  position INT NOT NULL
+  visible BOOLEAN
 ) CHARACTER SET utf8 COLLATE utf8_polish_ci;
 
 INSERT INTO groups (name) VALUES 

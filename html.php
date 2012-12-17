@@ -131,7 +131,7 @@
       return $this;
     }
 
-    public function __construct($object, $objectid = false) {
+    public function __construct($object = "", $objectid = false) {
       $this->objectid = $objectid;
       $this->interior = array();
       $this->add_to($this->interior, $object);

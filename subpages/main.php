@@ -50,7 +50,7 @@
       
       db_connect();
       
-      $infos = db_query("SELECT * FROM view_interestig");
+      $infos = db_query("SELECT * FROM view_interestig WHERE visible = 1 ORDER BY position");
       $ul = new HTMLTag("ul");
       foreach ($infos as $info) {
         $li = new HTMLTag("li", array(), array(
