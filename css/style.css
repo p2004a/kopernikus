@@ -157,7 +157,7 @@ img {
   color: #c2c3cb;
 }
 
-#topmenu li:first-child {
+#topmenu a:first-child {
   border: none;  
 }
 
