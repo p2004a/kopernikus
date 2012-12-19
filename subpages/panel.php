@@ -56,7 +56,7 @@
             <b>' . $user['name'] . '</b><br />
           </p>
           <ul id="panel_menu">
-            <li><a href="panel/logout">Wyloguj</a></li>
+            <a href="panel/logout"><li>Wyloguj</li></a>
           </ul>
           <div class="menufooter"></div>
         </div>
@@ -70,8 +70,8 @@
             include("subpages/panel/$file_name");
             $file_name = substr($file_name, 0, -4);
             if (call_user_func_array("auth_check_permission", ${"{$file_name}_name_permissions"})) {
-              $html->select("panel_menu")->add(new HTMLTag("li", array(), array(
-                new HTMLTag("a", array("href" => "panel/{$file_name}"), ${"{$file_name}_name"})
+              $html->select("panel_menu")->add(new HTMLTag("a", array("href" => "panel/{$file_name}"), array(
+                new HTMLTag("li", array(), ${"{$file_name}_name"})
               )));
             }
           }
