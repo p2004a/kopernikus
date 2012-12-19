@@ -30,8 +30,8 @@
             new HTMLTag('input', array("type" => "text", "name" => "title[]", "value" => $info['title'])),
             new HTMLTag('input', array("type" => "text", "name" => "url[]", "value" => $info['url'])),
             new HTMLTag('select', array("name" => "target[]"), array(
-              new HTMLTag('option', array("value" => "_target", $info['visible'] == "_target" ? "selected" : "" => "1"), "_target"),
-              new HTMLTag('option', array("value" => "_blank", $info['visible'] == "_blank" ? "selected" : "" => "1"), "_blank")
+              new HTMLTag('option', array("value" => "_target", $info['target'] == "_target" ? "selected" : "" => "1"), "_target"),
+              new HTMLTag('option', array("value" => "_blank", $info['target'] == "_blank" ? "selected" : "" => "1"), "_blank")
             )),
             new HTMLTag('input', array("type" => "checkbox", "name" => "visible[]", "value" => "1", $info['visible'] == 1 ? "checked" : "" => "1")),
             new HTMLTag('img', array("src" => "img/clock.png", "alt" => "drag icon", "style" => "cursor:move;"))
