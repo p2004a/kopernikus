@@ -30,7 +30,7 @@
           move_uploaded_file($file_tmp, $files_path . "/" . $file_name);
         }
         
-        return "Zapisano zmiany.";
+        return "<h3>Zapisano zmiany</h3>";
       } else {
         return form_create("panel_changes", "panel/changes", array(
           "MAX_FILE_SIZE" => "/10000000/"
