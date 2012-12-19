@@ -8,9 +8,12 @@
       if(!auth_check_permission("EditViewInteresting")) return panel_no_acces_info();
       
       if ($form = form_load("panel_interesting")) {
-        echo "<pre>";
-        print_r($form);
-        echo "</pre>";
+        db_connect();
+        db_query("DELETE FROM view_interestig");
+        for ($i = 0; $i < count($form['visible']); ++$i) {
+          db_query("INSERT INTO view_interestig (url, title, target, position, visible) VALUES ('" . db_esc_str($form['url'][$i]) . "', '" . db_esc_str($form['title'][$i]) . "', '" . db_esc_str($form['target'][$i]) . "', '$i', '" . db_esc_str($form['visible'][$i]) . "')");
+        }
+        db_close();
         return "<h3>Zapisano zmiany</h3>";
       } else {
       
@@ -21,7 +24,7 @@
         $button = new HTMLTag("button", array("type" => "button", "onclick" => "add_elem()"), "dodaj element");
         
         $infos = db_query("SELECT * FROM view_interestig ORDER BY position");
-        $ul = new HTMLTag("ul", array("id" => "interesting"));
+        $ul = new HTMLTag("ul", array("id" => "interesting", "style" => "margin-top: 20px;"));
         foreach ($infos as $info) {
           $li = new HTMLTag("li", array(), array(
             new HTMLTag('input', array("type" => "text", "name" => "title[]", "value" => $info['title'])),
@@ -43,6 +46,7 @@
         
         return new HTMLContainer(array(
           $button,
+          new HTMLTag("div", array("id" => "delete_row", "style" => "display: inline-block; background-color: #FFCCCC; width: 520px; margin-left:20px; text-align: center; padding: 5px;"), "usuń"),
           $form
         ));
       

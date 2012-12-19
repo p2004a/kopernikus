@@ -5,6 +5,14 @@ function add_elem() {
 $(document).ready(function() {
   $("#interesting").sortable();
   
+  $("#delete_row").droppable({
+    drop: function(event, ui) {
+      if (window.confirm("Czy na pewno chcesz usunąć element?")) {
+        ui.draggable.remove();
+      }
+    }
+  });
+  
   $("#form_interesting").submit(function() {
     $("#form_interesting input:checkbox").each(function() {
       if (!$(this).is(":checked")) {
