@@ -10,7 +10,7 @@
    
   require("core.php");
 
-  $html->loadCSS("css/style.css")->addHead(new HTMLTag("title", array(), "beta.kopernik.mielec.pl"));
+  $html->loadCSS("css/style.css")->addHead(new HTMLTag("title", array(), "II Liceum Ogólnokształcące im. Mikołaja Kopernika w Mielcu"));
   $html->addBody(new HTMLFromFile("templates/main_body.html"));
   
   // Load menu

@@ -31,7 +31,7 @@
               new HTMLTag('option', array("value" => "_blank", $info['visible'] == "_blank" ? "selected" : "" => "1"), "_blank")
             )),
             new HTMLTag('input', array("type" => "checkbox", "name" => "visible[]", "value" => "1", $info['visible'] == 1 ? "checked" : "" => "1")),
-            new HTMLTag('img', array("src" => "img/clock.png", "alt" => "drag icon"))
+            new HTMLTag('img', array("src" => "img/clock.png", "alt" => "drag icon", "style" => "cursor:move;"))
           ));
           $ul->add($li);
         }
