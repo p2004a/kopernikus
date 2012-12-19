@@ -9,8 +9,6 @@
       
       $form = form_load("panel_changes");
       
-      print_r($form);
-      
       if ($form && isset($_FILES['file'])) {
       
         $files_path = "changes";
