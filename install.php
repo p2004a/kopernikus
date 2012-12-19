@@ -17,7 +17,7 @@
     file_put_contents("config.php", "<?php \$conf_db = array('username' => '$db_login', 'password' => '$db_pass', 'dbname' => '$db_database', 'hostname' => '$db_server'); ?>");
     require("config.php");
     db_query(file_get_contents("database.sql"), true);
-    $html->addBody(new HTMLFromString('<h1>Instalacja zakońcona powodzeniem. Odśwież stronę.</h1>'));
+    $html->addBody(new HTMLFromString('<h1>Instalacja zakończona powodzeniem. Odśwież stronę.</h1>'));
   } else {
     $html->addBody(new HTMLFromString('
       <h1>Formularz instalacji systemu.</h1>
