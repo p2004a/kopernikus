@@ -14,7 +14,7 @@
         $news_html = new HTMLFromFile("templates/single_news.html");
         $news_html->select(".singlenews")->setAttribute("style", "border-top: 1px solid #EBEBEB;");
         $news_html->select(".readmore_a")->setAttribute("href", strip_tags($_SERVER['HTTP_REFERER']));
-        $news_html->select(".readmore_a")->clear()->add("Porwót &raquo;");
+        $news_html->select(".readmore_a")->clear()->add("Powrót &raquo;");
         
         $news_html->select(".title")->add($news['title']);
         $news_html->select(".text")->add($news['text']);

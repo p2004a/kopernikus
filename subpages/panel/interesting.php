@@ -11,7 +11,7 @@
         db_connect();
         db_query("DELETE FROM view_interestig");
         for ($i = 0; $i < count($form['visible']); ++$i) {
-          db_query("INSERT INTO view_interestig (url, title, target, position, visible) VALUES ('" . db_esc_str(htmlspecialchars($form['url'][$i])) . "', '" . db_esc_str(htmlspecialchars($form['title'][$i])) . "', '" . db_esc_str(htmlspecialchars($form['target'][$i])) . "', '$i', '" . db_esc_str($form['visible'][$i]) . "')");
+          db_query("INSERT INTO view_interestig (url, title, target, position, visible) VALUES ('" . db_esc_str($form['url'][$i]) . "', '" . db_esc_str($form['title'][$i]) . "', '" . db_esc_str($form['target'][$i]) . "', '$i', '" . db_esc_str($form['visible'][$i]) . "')");
         }
         db_close();
         return "<h3>Zapisano zmiany</h3>";
@@ -27,8 +27,8 @@
         $ul = new HTMLTag("ul", array("id" => "interesting", "style" => "margin-top: 20px;"));
         foreach ($infos as $info) {
           $li = new HTMLTag("li", array(), array(
-            new HTMLTag('input', array("type" => "text", "name" => "title[]", "value" => $info['title'])),
-            new HTMLTag('input', array("type" => "text", "name" => "url[]", "value" => $info['url'])),
+            new HTMLTag('input', array("type" => "text", "name" => "title[]", "value" => htmlspecialchars($info['title']))),
+            new HTMLTag('input', array("type" => "text", "name" => "url[]", "value" => htmlspecialchars($info['url']))),
             new HTMLTag('select', array("name" => "target[]"), array(
               new HTMLTag('option', array("value" => "_target", $info['target'] == "_target" ? "selected" : "" => "1"), "_target"),
               new HTMLTag('option', array("value" => "_blank", $info['target'] == "_blank" ? "selected" : "" => "1"), "_blank")
