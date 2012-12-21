@@ -38,8 +38,8 @@
       return false;
     }
     foreach ($_SESSION['forms'][$form_name] as $name => $value) {
-      if (!isset($_POST[$name]) 
-       || !is_string($_POST[$name]) 
+      if (!array_key_exists($name, $_POST)
+       || !is_string($_POST[$name])
        || !preg_match($value, $_POST[$name])) {
         unset($_SESSION['forms'][$form_name]);
         return false;
