@@ -10,7 +10,10 @@
    
   require("core.php");
 
-  $html->loadCSS("css/style.css")->addHead(new HTMLTag("title", array(), "II Liceum Ogólnokształcące im. Mikołaja Kopernika w Mielcu"));
+  $html->loadCSS("css/style.css")
+       ->addHead(new HTMLTag("title", array(), "II Liceum Ogólnokształcące im. Mikołaja Kopernika w Mielcu"))
+       ->addHead(new HTMLTag("link", array("rel" => "shortcut icon", "href" => "img/favicon.ico")));
+
   $html->addBody(new HTMLFromFile("templates/main_body.html"));
   
   // Load menu
