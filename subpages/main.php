@@ -8,7 +8,7 @@
       if (isset($params[1]) && is_numeric($params[1]) && 1 == count(db_query("SELECT * FROM news WHERE news_id = '" . intval($params[1]) . "'"))) {
         $news_id = intval($params[1]);
         
-        $newss = db_query("SELECT res.name, news.news_id, news.date, news.title, news.text, news.image FROM news INNER JOIN (SELECT user_id, name FROM users UNION SELECT user_id, name FROM deleted_users) AS res ON news.user_id = res.user_id WHERE news.news_id = $news_id");
+        $newss = db_query("SELECT res.name, news.news_id, news.date, news.title, news.short_text, news.text, news.image FROM news INNER JOIN (SELECT user_id, name FROM users UNION SELECT user_id, name FROM deleted_users) AS res ON news.user_id = res.user_id WHERE news.news_id = $news_id");
         $news = $newss[0];
       
         $news_html = new HTMLFromFile("templates/single_news.html");
@@ -17,7 +17,11 @@
         $news_html->select(".readmore_a")->clear()->add("Powrót &raquo;");
         
         $news_html->select(".title")->add($news['title']);
-        $news_html->select(".text")->add($news['text']);
+        if (trim(strip_tags($news['text'])) != "") {
+          $news_html->select(".text")->add($news['text']);
+        } else {
+          $news_html->select(".text")->add($news['short_text']);
+        }
         $t = strtotime($news['date']);
         $news_html->select(".time")->add(sprintf("%s %s %sr. | %s", date("j", $t), $months[intval(date("n", $t))], date("Y", $t), $news['name']));
         

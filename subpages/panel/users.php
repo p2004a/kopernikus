@@ -54,7 +54,7 @@
           "password" => "/./",
           "password_check" => "/./",
           "name" => "/^[\.-_a-zA-ZąęćżźńłóśĄĆĘŁŃÓŚŹŻ\s]{6,39}$/",
-          "email" => "/^[A-Za-z0-9\.@_-]{6,39}$/",
+          "email" => "/^[A-Za-z0-9\.@_-]{6,39}|$/",
           "group" => "/^[0-9]{1,8}$/"
         ), new HTMLContainer(array(new HTMLFromString('
           Login <input type="text" name="login" /><br />
@@ -109,7 +109,7 @@
           "password" => "/./",
           "password_check" => "/./",
           "name" => "/^[\.-_a-zA-ZąęćżźńłóśĄĆĘŁŃÓŚŹŻ\s]{6,39}$/",
-          "email" => "/^[A-Za-z0-9\.@_-]{6,39}$/",
+          "email" => "/^[A-Za-z0-9\.@_-]{6,39}|$/",
           "group" => "/^[0-9]{1,8}$/"
         ), new HTMLContainer(array(new HTMLFromString('
           Login <input type="text" name="login" value="' . $user['login'] . '" /><br />
