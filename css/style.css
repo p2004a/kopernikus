@@ -57,6 +57,14 @@ img {
   margin-right: 3px;
 }
 
+hr {
+  width: 90%;
+  height: 1px;
+  border: none;
+  background: #a0a0a0;
+  margin-left: 0px;
+}
+
 .readmore {
   float: right;
   padding-top: 15px;
