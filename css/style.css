@@ -3,7 +3,7 @@ body {
   font-size: 12px;
   margin: 0;
   padding: 0;
-  background: #eeeeee url('../img/bg2.png');
+  background: #fafafa url('../img/bg.png') repeat-x top;
 }
 
 h1 {
