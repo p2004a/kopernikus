@@ -1,4 +1,4 @@
-﻿Wydarzenia | main
+Wydarzenia | main
 O szkole | oszkole
 Dziennik | http://uonet.vulcan.net.pl/001799 | _blank
 Plan lekcji | http://plan.kopernik.mielec.pl/ | _blank
@@ -6,9 +6,9 @@ Kalendarz | kalendarz
 Galeria | gazetka
 
 Aktualności
-Zmiany | changes
 Wydarzenia | main
 Komunikaty | komunikaty
+Zmiany w planie lekcji | changes
 Kalendarz | kalendarz
 Dla maturzystów | matura13
 
@@ -22,13 +22,16 @@ Nauczyciele | nauczyciele
 Klasy | klasy
 Absolwenci | absolwenci
 Osiągnięcia | konkursy1112
-Wymiana polsko-niemiecka* | #
 Dokumenty | dokumenty
-Godziny urzędowania* | #
+Godziny urzędowania | godziny
+Rada Rodziców | rodzice
+Samorząd | su
+Wymiana polsko-niemiecka | wymiana
+
 
 Polecamy
 Zdjęcia i filmy | gazetka
-fizyka.kopernik.mielec.pl | http://fizyka.kopernik.mielec.pl | _blank
-
+Zderzenie Muzyczne | http://zm.kopernik.mielec.pl | _blank
+Archiwalna strona Kopernika  | http://stary.kopernik.mielec.pl | _blank
 
 
