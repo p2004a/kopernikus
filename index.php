@@ -72,6 +72,18 @@
     $html->select("content")->add(call_user_func("{$subpage_file}_main", $core_params));
   }
   
+  // Load leftboxes
+  $leftboxes = db_query("SELECT * FROM subpages WHERE name LIKE 'leftbox%' ORDER BY name");
+  foreach ($leftboxes as &$box) {
+    $html->select("leftside")->add(
+      new HTMLTag("div", array("class" => "menu"), array(
+        new HTMLTag("h1", array(), $box['title']),
+        $box['text'],
+        new HTMLTag("div", array("class" => "menufooter"))
+      )
+    ));
+  }     
+  
   // Load panel box
   if (file_exists("./subpages/panel.php")) {
     require_once("./subpages/panel.php");
