@@ -83,17 +83,16 @@
         if (++$i % 2 == 0) {
           $news_html->select(".singlenews")->setAttribute("style", "background: #f1f1f1;");
         }
+        $news_html->select(".title")->add(
+          new HTMLTag("a", array("href" => "main/view/{$news['news_id']}", "style" => "color:inherit; text-decoration:inherit;"), $news['title'])
+        );
         $news_html->select(".text")->add($news['short_text']);
         $t = strtotime($news['date']);
         $news_html->select(".time")->add(sprintf("%s %s %sr. | %s", date("j", $t), $months[intval(date("n", $t))], date("Y", $t), $news['name']));
         if (trim(strip_tags($news['text'])) != "") {
           $news_html->select(".readmore_a")->setAttribute("href", "main/view/{$news['news_id']}");
-          $news_html->select(".title")->add(
-            new HTMLTag("a", array("href" => "main/view/{$news['news_id']}", "style" => "color:inherit; text-decoration:inherit;"), $news['title'])
-          );
         } else {
           $news_html->select(".readmore")->hide();
-          $news_html->select(".title")->add($news['title']);
         }
         $content->select("newsbox")->add($news_html);
       }
