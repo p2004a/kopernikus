@@ -82,7 +82,13 @@
         new HTMLTag("div", array("class" => "menufooter"))
       )
     ));
-  }     
+  }
+  
+  // Load topboxes
+  $leftboxes = db_query("SELECT * FROM subpages WHERE name LIKE 'topbox%' ORDER BY name DESC");
+  foreach ($leftboxes as &$box) {
+    $html->select("content")->add($box['text'], false);
+  }
   
   // Load panel box
   if (file_exists("./subpages/panel.php")) {
