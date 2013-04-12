@@ -96,5 +96,10 @@
     panel_panel_box();
   }
   
+  // Load Google Analytics code if exists
+  if (file_exists("js/googleanalytics.js")) {
+    $html->loadJS("js/googleanalytics.js");
+  }
+  
   core_render();
 ?>
