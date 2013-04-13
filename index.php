@@ -101,5 +101,13 @@
     $html->loadJS("js/googleanalytics.js");
   }
   
+  // Load Facebook Admins list
+  $users = db_query("SELECT users.fbid FROM users INNER JOIN (SELECT group_id FROM group_permissions WHERE privilege_id = (SELECT privilege_id FROM privileges WHERE name = 'FacebookAdmin')) AS res ON users.group_id = res.group_id WHERE users.fbid <> ''");
+  if (!empty($users)) {
+    $users_fbids = array();
+    foreach ($users as $user) array_push($users_fbids, $user['fbid']);
+    $html->addHead(new HTMLTag("meta", array("property" => "fb:admins", "content" => implode(',', $users_fbids))));
+  }
+  
   core_render();
 ?>

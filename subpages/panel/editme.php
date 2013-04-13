@@ -20,7 +20,7 @@
         } else {
           $pass = hash("sha512", $form['new_password']);
         }
-        db_query("UPDATE users SET pass = '$pass', name = '{$form['name']}', email = '{$form['email']}' WHERE user_id = {$user['user_id']}");
+        db_query("UPDATE users SET pass = '$pass', name = '{$form['name']}', email = '{$form['email']}', fbid = '{$form['fbid']}' WHERE user_id = {$user['user_id']}");
         
         db_close();
         
@@ -34,12 +34,14 @@
           "new_password_check" => "/./",
           "name" => "/^[\.-_a-zA-ZąęćżźńłóśĄĆĘŁŃÓŚŹŻ\s]{6,39}|$/",
           "email" => "/^[A-Za-z0-9\.@_-]{6,39}|$/",
+          "fbid" => "/^[0-9]{14,20}|$/"
         ), new HTMLContainer(array(new HTMLFromString('
           Obecne hasło <input type="password" name="password" /><br /><br />
           Nazwa <input type="text" name="name" value="' . $user['name'] . '" /><br />
           Nowe hasło <input type="password" name="new_password" value="old_password" /><br />
           Nowe hasło <input type="password" name="new_password_check" value="old_password" /><br />
           Email <input type="text" name="email" value="' . $user['email'] . '" /><br />
+          Facebook ID <input type="text" name="fbid" value="' . $user['fbid'] . '" /><br />
           <br /><input type="submit" />
         '))));
       }

@@ -6,7 +6,8 @@ CREATE TABLE users (
   login CHAR(20),
   pass CHAR(128),
   name CHAR(40),
-  email CHAR(40)
+  email CHAR(40),
+  fbid CHAR(20)
 ) CHARACTER SET utf8 COLLATE utf8_polish_ci;
 
 CREATE TABLE deleted_users (
@@ -15,7 +16,8 @@ CREATE TABLE deleted_users (
   login CHAR(20),
   pass CHAR(128),
   name CHAR(40),
-  email CHAR(40)
+  email CHAR(40),
+  fbid CHAR(20)
 ) CHARACTER SET utf8 COLLATE utf8_polish_ci;
 
 CREATE TABLE groups (
@@ -76,14 +78,16 @@ INSERT INTO privileges (name, description) VALUES
 ('EditUsers', 'Dodawanie, usuwanie i edytowanie użytkowników'),
 ('EditMenu', 'Edytowanie menu'),
 ('EditSubpages', 'Dodawanie, usuwanie i edytowanie podstron'),
-('EditViewInteresting', 'Dodawanie, usuwanie i edytowanie elementów w zobacz na stronie głównej');
+('EditViewInteresting', 'Dodawanie, usuwanie i edytowanie elementów w zobacz na stronie głównej'),
+('FacebookAdmin', 'Moderowanie komentarzy i dostęp do statystyk strony');
 
 INSERT INTO group_permissions (group_id, privilege_id) VALUES 
 ((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'EditChanges')),
 ((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'EditUsers')),
 ((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'EditMenu')),
 ((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'EditSubpages')),
-((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'EditViewInteresting'));
+((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'EditViewInteresting')),
+((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'FacebookAdmin'));
 
 CREATE TABLE `nameday` (
   `id` int(10) NOT NULL PRIMARY KEY,
