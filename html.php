@@ -605,6 +605,85 @@
       return $out->render();
     }
   }
+  
+  class HTMLFacebookLike extends HTMLSimpleObject {
+    private $url;
+    
+    public function __construct($url) {
+      $this->url = $url;
+      
+      if (!isset($GLOBALS['facebook_sdk_loaded'])) {
+        $GLOBALS['facebook_sdk_loaded'] = true;
+        $GLOBALS['html']->addBody('
+          <div id="fb-root"></div>
+          <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/pl_PL/all.js#xfbml=1";
+            fjs.parentNode.insertBefore(js, fjs);
+          }(document, \'script\',\'facebook-jssdk\'));</script>
+        ', false);
+      }
+    }
+    
+    public function render_visible() {
+      $out = new HTMLTag("fb:like", array("href" => "http://" . $_SERVER['SERVER_NAME'] . substr($_SERVER['SCRIPT_NAME'], 0, -9) . $this->url, "send" => "false", "layout" => "button_count", "width" => "450", "show_faces" => "false"));
+      
+      return $out->render();
+    }
+  }
+  
+  class HTMLFacebookComments extends HTMLSimpleObject {
+    private $url;
+    private $width;
+    private $num_posts;
+    
+    public function __construct($url, $width, $num_posts = 10) {
+      $this->url = $url;
+      $this->width = $width;
+      $this->num_posts = $num_posts;
+      
+      if (!isset($GLOBALS['facebook_sdk_loaded'])) {
+        $GLOBALS['facebook_sdk_loaded'] = true;
+        $GLOBALS['html']->addBody('
+          <div id="fb-root"></div>
+          <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/pl_PL/all.js#xfbml=1";
+            fjs.parentNode.insertBefore(js, fjs);
+          }(document, \'script\',\'facebook-jssdk\'));</script>
+        ', false);
+      }
+    }
+    
+    public function render_visible() {
+      $out = new HTMLTag("fb:comments", array("href" => "http://" . $_SERVER['SERVER_NAME'] . substr($_SERVER['SCRIPT_NAME'], 0, -9) . $this->url, "width" => $this->width, "num_posts" => $this->num_posts));
+      
+      return $out->render();
+    }
+  }
+  
+  class HTMLGooglePlusOne extends HTMLSimpleObject {
+    private $url;
+    
+    public function __construct($url) {
+      $this->url = $url;
+      
+      if (!isset($GLOBALS['google_plusone_loaded'])) {
+        $GLOBALS['google_plusone_loaded'] = true;
+        $GLOBALS['html']->addHead(new HTMLTag("script", array("type" => "text/javascript", "src" => "https://apis.google.com/js/plusone.js"), "{lang: 'pl'}"));
+      }
+    }
+    
+    public function render_visible() {
+      $out = new HTMLTag("g:plusone", array("href" => "http://" . $_SERVER['SERVER_NAME'] . substr($_SERVER['SCRIPT_NAME'], 0, -9) . $this->url, "size" => "small"));
+      
+      return $out->render();
+    }
+  }
 
   $html = new HTMLPage();
 ?>

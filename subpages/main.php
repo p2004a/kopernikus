@@ -24,9 +24,17 @@
         }
         $t = strtotime($news['date']);
         $news_html->select(".time")->add(sprintf("%s %s %sr. | %s", date("j", $t), $months[intval(date("n", $t))], date("Y", $t), $news['name']));
-        
-        return $news_html;
-        
+
+        $news_html->select(".social")
+          ->add(new HTMLFacebookLike("main/view/$news_id"))
+          ->add("&nbsp&nbsp&nbsp")
+          ->add(new HTMLGooglePlusOne("main/view/$news_id"));
+
+        return array(
+          $news_html,
+          new HTMLFacebookComments("main/view/$news_id", 654)
+        );
+
       } else {
         
         $out = new HTMLFromFile("templates/subpage.html");
@@ -94,6 +102,12 @@
         } else {
           $news_html->select(".readmore")->hide();
         }
+
+        $news_html->select(".social")
+          ->add(new HTMLFacebookLike("main/view/{$news['news_id']}"))
+          ->add("&nbsp&nbsp&nbsp")
+          ->add(new HTMLGooglePlusOne("main/view/{$news['news_id']}"));
+
         $content->select("newsbox")->add($news_html);
       }
       return $content;
