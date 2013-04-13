@@ -26,6 +26,7 @@ Dokumenty | dokumenty
 Godziny urzędowania | godziny
 Rada Rodziców | rodzice
 Samorząd | su
+Szkolne radio | radio
 Wymiana polsko-niemiecka | wymiana
 
 
