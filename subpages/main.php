@@ -1,5 +1,6 @@
 <?php
   function main_main($params) {
+    global $html;
   
     $months = array(1 => "stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "września", "października", "listopada", "grudnia");
     $weekdays = array(1 => "poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota", "niedziela");
@@ -13,8 +14,12 @@
       
         $news_html = new HTMLFromFile("templates/single_news.html");
         $news_html->select(".singlenews")->setAttribute("style", "border-top: 1px solid #EBEBEB;");
-        $news_html->select(".readmore_a")->setAttribute("href", strip_tags($_SERVER['HTTP_REFERER']));
-        $news_html->select(".readmore_a")->clear()->add("Powrót &raquo;");
+        if (isset($_SERVER['HTTP_REFERER'])) {
+          $news_html->select(".readmore_a")->setAttribute("href", strip_tags($_SERVER['HTTP_REFERER']));
+          $news_html->select(".readmore_a")->clear()->add("Powrót &raquo;");
+        } else {
+          $news_html->select(".readmore_a")->hide();
+        }
         
         $news_html->select(".title")->add($news['title']);
         if (trim(strip_tags($news['text'])) != "") {
@@ -29,6 +34,8 @@
           ->add(new HTMLFacebookLike("main/view/$news_id"))
           ->add("&nbsp&nbsp&nbsp")
           ->add(new HTMLGooglePlusOne("main/view/$news_id"));
+
+        $html->select("property.og:title")->setAttribute("content", $news['title']);
 
         return array(
           $news_html,

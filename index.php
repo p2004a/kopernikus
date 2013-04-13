@@ -45,6 +45,16 @@
     }
   }
   
+  //Fill in OpenGraph tags
+  $html->addHead(new HTMLTag("meta", array("property" => "og:type", "content" => "website")));
+  $html->addHead(new HTMLTag("meta", array("property" => "og:locale", "content" => "pl_PL")));
+  $html->addHead(new HTMLTag("meta", array("property" => "og:url", "content" => $core_base_root . implode("/", $core_params))));
+  $html->addHead(new HTMLTag("meta", array("property" => "og:image", "content" => $core_base_root . "img/og_image.jpg")));
+  $html->addHead(new HTMLTag("meta", array("property" => "og:title", "content" => "II Liceum Ogólnokształcące im. Mikołaja Kopernika w Mielcu")));
+  $html->addHead(new HTMLTag("meta", array("property" => "og:description", "content" => 
+   "Strona internetowa II Liceum Ogólnokształcące im. Mikołaja Kopernika w Mielcu"
+  )));
+  
   // Load page content
   if (count($core_params) == 0) {
     array_push($core_params, "main");

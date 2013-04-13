@@ -246,7 +246,7 @@
           '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' . "\n",
           new HTMLTag("html", array("xmlns" => "http://www.w3.org/1999/xhtml", "xml:lang" => "en"), array(
             new HTMLTag("head", array(), array(
-              new HTMLTag("base", array("href" => "http://" . $_SERVER['SERVER_NAME'] . substr($_SERVER['SCRIPT_NAME'], 0, -9))),
+              new HTMLTag("base", array("href" => $GLOBALS['core_base_root'])),
               new HTMLTag("meta", array("http-equiv" => "content-type", "content" => "text/html; charset=utf-8")),
               $this->html_head
             )),
@@ -628,7 +628,7 @@
     }
     
     public function render_visible() {
-      $out = new HTMLTag("fb:like", array("href" => "http://" . $_SERVER['SERVER_NAME'] . substr($_SERVER['SCRIPT_NAME'], 0, -9) . $this->url, "send" => "false", "layout" => "button_count", "width" => "450", "show_faces" => "false"));
+      $out = new HTMLTag("fb:like", array("href" => $GLOBALS['core_base_root'] . $this->url, "send" => "false", "layout" => "button_count", "width" => "450", "show_faces" => "false"));
       
       return $out->render();
     }
@@ -660,7 +660,7 @@
     }
     
     public function render_visible() {
-      $out = new HTMLTag("fb:comments", array("href" => "http://" . $_SERVER['SERVER_NAME'] . substr($_SERVER['SCRIPT_NAME'], 0, -9) . $this->url, "width" => $this->width, "num_posts" => $this->num_posts));
+      $out = new HTMLTag("fb:comments", array("href" => $GLOBALS['core_base_root'] . $this->url, "width" => $this->width, "num_posts" => $this->num_posts));
       
       return $out->render();
     }
@@ -679,7 +679,7 @@
     }
     
     public function render_visible() {
-      $out = new HTMLTag("g:plusone", array("href" => "http://" . $_SERVER['SERVER_NAME'] . substr($_SERVER['SCRIPT_NAME'], 0, -9) . $this->url, "size" => "small"));
+      $out = new HTMLTag("g:plusone", array("href" => $GLOBALS['core_base_root'] . $this->url, "size" => "small"));
       
       return $out->render();
     }

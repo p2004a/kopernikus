@@ -39,6 +39,11 @@
   }
   
   /**
+   * @brief Zmienna zawierająca base adres strony
+   */
+  $core_base_root = "http://" . $_SERVER['SERVER_NAME'] . substr($_SERVER['SCRIPT_NAME'], 0, -9);
+  
+  /**
    * @brief Tablica zawierająca ostrzeżenia
    * @see core_warning()
    */
