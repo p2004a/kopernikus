@@ -17,8 +17,6 @@
         return "<h3>Zapisano zmiany</h3>";
       } else {
       
-        $html->loadJS("//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js");
-        $html->loadJS("//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js");
         $html->loadJS("js/edit_interesting.js");
        
         $button = new HTMLTag("button", array("type" => "button", "onclick" => "add_elem()"), "dodaj element");

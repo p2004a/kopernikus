@@ -12,9 +12,10 @@
 
   $html->loadCSS("css/style.css")
        ->addHead(new HTMLTag("title", array(), "II Liceum Ogólnokształcące im. Mikołaja Kopernika w Mielcu"))
-       ->addHead(new HTMLTag("link", array("rel" => "shortcut icon", "href" => "img/favicon.ico")));
-
-  $html->addBody(new HTMLFromFile("templates/main_body.html"));
+       ->addHead(new HTMLTag("link", array("rel" => "shortcut icon", "href" => "img/favicon.ico")))
+       ->loadJS("//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js")
+       ->loadJS("//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js")
+       ->addBody(new HTMLFromFile("templates/main_body.html"));
   
   // Load menu
   $menu_file = file("menu.inc");

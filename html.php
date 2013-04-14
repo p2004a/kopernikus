@@ -606,25 +606,50 @@
     }
   }
   
-  class HTMLFacebookLike extends HTMLSimpleObject {
+  abstract class HTMLFacebookObject extends HTMLSimpleObject {
+    protected function init_facebook() {
+      if (!isset($GLOBALS['facebook_sdk_loaded'])) {
+        $GLOBALS['facebook_sdk_loaded'] = true;
+        $GLOBALS['html']->loadJS('js/facebook.js');
+        if (isset($GLOBALS['conf_fb_app_id'])) {
+          $app_id = '"' . $GLOBALS['conf_fb_app_id'] . '"';
+        } else {
+          $app_id = 'null';
+        }
+        $GLOBALS['html']->addBody('
+          <div id="fb-root"></div>
+          <script>
+            window.fbAsyncInit = function() {
+              FB.init({
+                appId      : ' . $app_id . ',
+                channelUrl : "' . $GLOBALS['core_base_root'] . 'channel",
+                status     : true,
+                xfbml      : true
+              });
+              
+              facebook_main()
+            };
+
+            // Load the SDK asynchronously
+            (function(d, s, id){
+               var js, fjs = d.getElementsByTagName(s)[0];
+               if (d.getElementById(id)) {return;}
+               js = d.createElement(s); js.id = id;
+               js.src = "//connect.facebook.net/en_US/all.js";
+               fjs.parentNode.insertBefore(js, fjs);
+             }(document, "script", "facebook-jssdk"));
+          </script>        
+        ', false);
+      }
+    }
+  }
+  
+  class HTMLFacebookLike extends HTMLFacebookObject {
     private $url;
     
     public function __construct($url) {
       $this->url = $url;
-      
-      if (!isset($GLOBALS['facebook_sdk_loaded'])) {
-        $GLOBALS['facebook_sdk_loaded'] = true;
-        $GLOBALS['html']->addBody('
-          <div id="fb-root"></div>
-          <script>(function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/pl_PL/all.js#xfbml=1";
-            fjs.parentNode.insertBefore(js, fjs);
-          }(document, \'script\',\'facebook-jssdk\'));</script>
-        ', false);
-      }
+      $this->init_facebook();
     }
     
     public function render_visible() {
@@ -634,7 +659,7 @@
     }
   }
   
-  class HTMLFacebookComments extends HTMLSimpleObject {
+  class HTMLFacebookComments extends HTMLFacebookObject {
     private $url;
     private $width;
     private $num_posts;
@@ -644,19 +669,7 @@
       $this->width = $width;
       $this->num_posts = $num_posts;
       
-      if (!isset($GLOBALS['facebook_sdk_loaded'])) {
-        $GLOBALS['facebook_sdk_loaded'] = true;
-        $GLOBALS['html']->addBody('
-          <div id="fb-root"></div>
-          <script>(function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/pl_PL/all.js#xfbml=1";
-            fjs.parentNode.insertBefore(js, fjs);
-          }(document, \'script\',\'facebook-jssdk\'));</script>
-        ', false);
-      }
+      $this->init_facebook();
     }
     
     public function render_visible() {
