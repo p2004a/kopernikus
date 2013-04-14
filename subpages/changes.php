@@ -20,7 +20,7 @@
     $content = fread($file, $size);
     fclose($file);
 
-    header("Content-Type: application/octet-stream");
+    header("Content-Type: " . mime_content_type($path));
     header("Content-Length: $size;");
     header("Content-Disposition: attachment; filename=" . $file_name);
 
