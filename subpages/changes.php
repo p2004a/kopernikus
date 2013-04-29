@@ -22,7 +22,7 @@
 
     header("Content-Type: " . mime_content_type($path));
     header("Content-Length: $size;");
-    header("Content-Disposition: attachment; filename=" . $file_name);
+    header("Content-Disposition: inline; filename=" . $file_name);
 
     echo $content;
     exit;
