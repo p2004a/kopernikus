@@ -20,6 +20,7 @@
         } else {
           $pass = hash("sha512", $form['new_password']);
         }
+        if ($user['name'] == 'Administrator') $form['name'] = 'Administrator';
         db_query("UPDATE users SET pass = '$pass', name = '{$form['name']}', email = '{$form['email']}', fbid = '{$form['fbid']}' WHERE user_id = {$user['user_id']}");
         
         db_close();
@@ -32,7 +33,7 @@
           "password" => "/./",
           "new_password" => "/./",
           "new_password_check" => "/./",
-          "name" => "/^[\.-_a-zA-ZąęćżźńłóśĄĆĘŁŃÓŚŹŻ\s]{6,39}|$/",
+          "name" => "/^[\.-_a-zA-ZąęćżźńłóśĄĆĘŁŃÓŚŹŻ\s]{6,39}(?<!Administrator)$/",
           "email" => "/^[A-Za-z0-9\.@_-]{6,39}|$/",
           "fbid" => "/^[0-9]{14,20}|$/"
         ), new HTMLContainer(array(new HTMLFromString('

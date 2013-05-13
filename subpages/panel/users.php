@@ -50,10 +50,10 @@
         }
         
         return form_create("panel_user_add", "panel/users/add", array(
-          "login" => "/^[A-Za-z0-9_]{3,19}$/",
+          "login" => "/^[A-Za-z0-9_]{3,19}(?<!admin)(?<!guest)$/",
           "password" => "/./",
           "password_check" => "/./",
-          "name" => "/^[\.-_a-zA-ZąęćżźńłóśĄĆĘŁŃÓŚŹŻ\s]{6,39}$/",
+          "name" => "/^[\.-_a-zA-ZąęćżźńłóśĄĆĘŁŃÓŚŹŻ\s]{6,39}(?<!Administrator)$/",
           "email" => "/^[A-Za-z0-9\.@_-]{6,39}|$/",
           "fbid" => "/^[0-9]{14,20}|$/",
           "group" => "/^[0-9]{1,8}$/"
@@ -91,6 +91,10 @@
         } else {
           $pass = hash("sha512", $form['password']);
         }
+        if ($user['login'] === 'admin') $form['login'] = 'admin';
+        if ($user['login'] === 'guest') $form['login'] = 'guest';
+        if ($user['name'] === 'Administrator') $form['name'] = 'Administrator';
+        if ($user['name'] === 'Gość') $form['name'] = 'Gość';
         db_query("UPDATE users SET login = '{$form['login']}', pass = '$pass', name = '{$form['name']}', email = '{$form['email']}', fbid = '{$form['fbid']}', group_id = {$form['group']} WHERE user_id = $user_id");
         return new HTMLFromString("<h3>Zedytowano użytkownika</h3>");
       } else {
@@ -107,10 +111,10 @@
         }
         
         return form_create("panel_user_edit", "panel/users/edit/$user_id", array(
-          "login" => "/^[A-Za-z0-9_]{3,19}$/",
+          "login" => "/^[A-Za-z0-9_]{3,19}(?<!admin)(?<!guest)$/",
           "password" => "/./",
           "password_check" => "/./",
-          "name" => "/^[\.-_a-zA-ZąęćżźńłóśĄĆĘŁŃÓŚŹŻ\s]{6,39}$/",
+          "name" => "/^[\.-_a-zA-ZąęćżźńłóśĄĆĘŁŃÓŚŹŻ\s]{6,39}(?<!Administrator)$/",
           "email" => "/^[A-Za-z0-9\.@_-]{6,39}|$/",
           "fbid" => "/^[0-9]{14,20}|$/",
           "group" => "/^[0-9]{1,8}$/"
