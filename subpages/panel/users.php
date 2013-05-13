@@ -38,7 +38,7 @@
           $pass = hash("sha512", $form['password']);
           
           if (count(db_query("SELECT group_id FROM groups WHERE group_id == {$form['group']}")) != 1) {
-            $group = db_query("SELECT group_id FROM groups WHERE name == 'Guests'"));
+            $group = db_query("SELECT group_id FROM groups WHERE name == 'Guests'");
             $form['group'] = $group[0]['group_id'];
           }
           
@@ -101,7 +101,7 @@
           $pass = hash("sha512", $form['password']);
         }
         if (count(db_query("SELECT group_id FROM groups WHERE group_id == {$form['group']}")) != 1) {
-          $group = db_query("SELECT group_id FROM groups WHERE name == 'Guests'"));
+          $group = db_query("SELECT group_id FROM groups WHERE name == 'Guests'");
           $form['group'] = $group[0]['group_id'];
         }
         db_query("UPDATE users SET login = '{$form['login']}', pass = '$pass', name = '{$form['name']}', email = '{$form['email']}', fbid = '{$form['fbid']}', group_id = {$form['group']} WHERE user_id = $user_id");
