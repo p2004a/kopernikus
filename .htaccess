@@ -5,6 +5,7 @@ RewriteCond %{REQUEST_URI} \.(css|gif|ico|jpg|js|png|swf|txt|pdf|doc|docx|ps)$
 RewriteRule ^(.*)$ $1 [L]
 
 RewriteRule ^ckeditor/(.*)$ ckeditor/$1 [L]
+RewriteRule ^files/(.*)$ files/$1 [L]
 
 RewriteCond %{REQUEST_URI} !/index\.php$
 RewriteRule (.*) index.php?f=$1 [L]
