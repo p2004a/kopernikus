@@ -79,6 +79,8 @@ INSERT INTO privileges (name, description) VALUES
 ('EditMenu', 'Edytowanie menu'),
 ('EditSubpages', 'Dodawanie, usuwanie i edytowanie podstron'),
 ('EditViewInteresting', 'Dodawanie, usuwanie i edytowanie elementów w zobacz na stronie głównej'),
+('EditNews', 'Dodawanie, usuwanie i edytowanie (ale tylko własnych) aktualności'),
+('EditNewsAll', 'Dodawanie, usuwanie i edytowanie wszystkich aktualności'),
 ('FacebookAdmin', 'Moderowanie komentarzy i dostęp do statystyk strony');
 
 INSERT INTO group_permissions (group_id, privilege_id) VALUES 
@@ -87,6 +89,8 @@ INSERT INTO group_permissions (group_id, privilege_id) VALUES
 ((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'EditMenu')),
 ((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'EditSubpages')),
 ((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'EditViewInteresting')),
+((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'EditNews')),
+((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'EditNewsAll')),
 ((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'FacebookAdmin'));
 
 CREATE TABLE `nameday` (
