@@ -36,6 +36,12 @@
           UNION SELECT * FROM users WHERE name = '{$form['name']}'
          "))) {
           $pass = hash("sha512", $form['password']);
+          
+          if (count(db_query("SELECT group_id FROM groups WHERE group_id == {$form['group']}")) != 1) {
+            $group = db_query("SELECT group_id FROM groups WHERE name == 'Guests'"));
+            $form['group'] = $group[0]['group_id'];
+          }
+          
           db_query("INSERT INTO users (login, group_id, pass, name, email, fbid) VALUES ('{$form['login']}', '{$form['group']}', '{$pass}', '{$form['name']}', '{$form['email']}', '{$form['fbid']}')");
           return new HTMLFromString("<h3>Stworzono użytkownika</h3>");
         } else {
@@ -93,6 +99,10 @@
           $pass = $user['pass'];
         } else {
           $pass = hash("sha512", $form['password']);
+        }
+        if (count(db_query("SELECT group_id FROM groups WHERE group_id == {$form['group']}")) != 1) {
+          $group = db_query("SELECT group_id FROM groups WHERE name == 'Guests'"));
+          $form['group'] = $group[0]['group_id'];
         }
         db_query("UPDATE users SET login = '{$form['login']}', pass = '$pass', name = '{$form['name']}', email = '{$form['email']}', fbid = '{$form['fbid']}', group_id = {$form['group']} WHERE user_id = $user_id");
         return new HTMLFromString("<h3>Zedytowano użytkownika</h3>");
