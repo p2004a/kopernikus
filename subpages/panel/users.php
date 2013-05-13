@@ -86,15 +86,14 @@
       
       $form = form_load("panel_user_edit");
       if ($form && $form['password'] == $form['password_check']) {
+        if ($user['login'] === 'admin' || $user['login'] === 'guest') {
+          return new HTMLFromString("<h3>Nie można edytować Gościa i Administratora (Administratora można poprzez 'Ustawienia konta')</h3>");
+        }
         if ($form['password'] == "old_password") {
           $pass = $user['pass'];
         } else {
           $pass = hash("sha512", $form['password']);
         }
-        if ($user['login'] === 'admin') $form['login'] = 'admin';
-        if ($user['login'] === 'guest') $form['login'] = 'guest';
-        if ($user['name'] === 'Administrator') $form['name'] = 'Administrator';
-        if ($user['name'] === 'Gość') $form['name'] = 'Gość';
         db_query("UPDATE users SET login = '{$form['login']}', pass = '$pass', name = '{$form['name']}', email = '{$form['email']}', fbid = '{$form['fbid']}', group_id = {$form['group']} WHERE user_id = $user_id");
         return new HTMLFromString("<h3>Zedytowano użytkownika</h3>");
       } else {
@@ -149,6 +148,8 @@
           if ($user_id != $u[0]['user_id'] && $user_id != $u[1]['user_id']) {
             db_query("INSERT INTO deleted_users SELECT * FROM users WHERE user_id = '{$user_id}'");
             db_query("DELETE FROM users WHERE user_id = '{$user_id}'");
+          } else {
+            return new HTMLFromString("<h3>Nie można usunąć Gościa i Administratora.</h3>");
           }
           db_close();
           return new HTMLFromString("<h3>Usunięto użytkownika.</h3>");

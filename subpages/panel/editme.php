@@ -33,7 +33,7 @@
           "password" => "/./",
           "new_password" => "/./",
           "new_password_check" => "/./",
-          "name" => "/^[\.-_a-zA-ZąęćżźńłóśĄĆĘŁŃÓŚŹŻ\s]{6,39}(?<!Administrator)$/",
+          "name" => "/^[\.-_a-zA-ZąęćżźńłóśĄĆĘŁŃÓŚŹŻ\s]{6,39}$/",
           "email" => "/^[A-Za-z0-9\.@_-]{6,39}|$/",
           "fbid" => "/^[0-9]{14,20}|$/"
         ), new HTMLContainer(array(new HTMLFromString('
