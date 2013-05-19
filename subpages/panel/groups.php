@@ -70,6 +70,7 @@
             }
           }
           db_close();
+          log_msg("stworzył nową grupę ({$group_id}) {$form['name']}.");
           return new HTMLFromString("<h3>Stworzono grupę</h3>");
         } else {
           return new HTMLFromString("<h3>Istnieje grupa o wybranej nazwie</h3>");
@@ -105,6 +106,7 @@
           }
         }
         db_close();
+        log_msg("zedytował grupę ({$group_id}) {$form['name']}.");
         return new HTMLFromString("<h3>Zedytowano grupę</h3>");
       } else {
         $form = _groups_gen_form();
@@ -145,6 +147,7 @@
             return new HTMLFromString("<h3>Nie można usunąć grupy Administrators lub Guests.</h3>");
           }
           db_close();
+          log_msg("usunął grupę ({$group_id}).");
           return new HTMLFromString("<h3>Usunięto grupę.</h3>");
         } else {
           return users_view(array());

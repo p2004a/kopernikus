@@ -70,6 +70,7 @@
         $user = auth_who();
         if (!isset($form['data'])) $form['data'] = "";
         db_query("INSERT INTO news (user_id, date, title, text, short_text) VALUES ({$user['user_id']}, '" . sprintf("%04d-%02d-%02d", $form['year'], $form['month'], $form['day']) . "', '" . db_esc_str(htmlspecialchars($form['title'])) . "', '" . db_esc_str(_news_del_javascript($form['data'])) . "', '" . db_esc_str(_news_del_javascript($form['data_short'])) . "')");
+        log_msg("dodał newsa '" . htmlspecialchars($form['title']) . "'.");
         return new HTMLFromString("<h3>Dodano newsa.</h3>");
       } else {
         
@@ -117,6 +118,7 @@
       if ($form = form_load("panel_news_edit")) {
         if (!isset($form['data'])) $form['data'] = "";
         db_query("UPDATE news SET user_id = {$user['user_id']}, date = '" . sprintf("%04d-%02d-%02d", $form['year'], $form['month'], $form['day']) . "', title = '" . db_esc_str(htmlspecialchars($form['title'])) . "', text = '" . db_esc_str(_news_del_javascript($form['data'])) . "', short_text = '" . db_esc_str(_news_del_javascript($form['data_short'])) . "' WHERE news_id = '{$news_id}'");
+        log_msg("zedytował newsa ({$news_id}) '" . htmlspecialchars($form['title']) . "'.");
         return new HTMLFromString("<h3>Zedytowano newsa.</h3>");
         
       } else {
@@ -164,6 +166,7 @@
       if ($form = form_load("panel_news_del")) {
         if ($form['del'] == "Tak") {
           db_query("DELETE FROM news WHERE news_id = '{$news_id}'");
+          log_msg("usunął newsa ({$news_id}).");
           return new HTMLFromString("<h3>Usunięto news.</h3>");
         } else {
           return news_view(array());

@@ -117,5 +117,6 @@
   }
   
   require("auth.php");
+  require("log.php");
   require("form.php");
 ?>

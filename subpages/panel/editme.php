@@ -25,6 +25,7 @@
         
         db_close();
         
+        log_msg("zmienił ustawienia swojego konta.");
         return new HTMLFromString("<h3>Zapisano zmiany</h3>");
       } else {
         db_close();

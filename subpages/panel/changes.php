@@ -30,6 +30,7 @@
           move_uploaded_file($file_tmp, $files_path . "/" . $file_name);
         }
         
+        log_msg("wstawił nowy plik ze zmianami.");
         return "<h3>Zapisano zmiany</h3>";
       } else {
         $weekdays = array(1 => "Pon", "Wto", "Śro", "Czw", "Pią", "Sob", "Nie");

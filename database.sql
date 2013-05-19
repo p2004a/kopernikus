@@ -65,6 +65,13 @@ CREATE TABLE view_interestig (
   visible BOOLEAN
 ) CHARACTER SET utf8 COLLATE utf8_polish_ci;
 
+CREATE TABLE logs (
+  log_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id INT,
+  message TEXT,
+  time DATETIME
+) CHARACTER SET utf8 COLLATE utf8_polish_ci;
+
 INSERT INTO groups (name) VALUES 
 ('Administrators'),
 ('Guests');
@@ -81,6 +88,7 @@ INSERT INTO privileges (name, description) VALUES
 ('EditViewInteresting', 'Dodawanie, usuwanie i edytowanie elementów w zobacz na stronie głównej'),
 ('EditNews', 'Dodawanie, usuwanie i edytowanie (ale tylko własnych) aktualności'),
 ('EditNewsAll', 'Dodawanie, usuwanie i edytowanie wszystkich aktualności'),
+('ViewLogs', 'Oglądanie logów strony'),
 ('FacebookAdmin', 'Moderowanie komentarzy i dostęp do statystyk strony');
 
 INSERT INTO group_permissions (group_id, privilege_id) VALUES 
@@ -91,6 +99,7 @@ INSERT INTO group_permissions (group_id, privilege_id) VALUES
 ((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'EditViewInteresting')),
 ((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'EditNews')),
 ((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'EditNewsAll')),
+((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'ViewLogs')),
 ((SELECT group_id FROM groups WHERE name = 'Administrators'), (SELECT privilege_id FROM privileges WHERE name = 'FacebookAdmin'));
 
 CREATE TABLE `nameday` (

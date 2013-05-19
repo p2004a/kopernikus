@@ -14,6 +14,7 @@
           db_query("INSERT INTO view_interestig (url, title, target, position, visible) VALUES ('" . db_esc_str($form['url'][$i]) . "', '" . db_esc_str($form['title'][$i]) . "', '" . db_esc_str($form['target'][$i]) . "', '$i', '" . db_esc_str($form['visible'][$i]) . "')");
         }
         db_close();
+        log_msg("zmienił 'interesujące'.");
         return "<h3>Zapisano zmiany</h3>";
       } else {
       

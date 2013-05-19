@@ -43,6 +43,7 @@
           }
           
           db_query("INSERT INTO users (login, group_id, pass, name, email, fbid) VALUES ('{$form['login']}', '{$form['group']}', '{$pass}', '{$form['name']}', '{$form['email']}', '{$form['fbid']}')");
+          log_msg("dodał użytkownika '{$form['login']}'.");
           return new HTMLFromString("<h3>Stworzono użytkownika</h3>");
         } else {
           return new HTMLFromString("<h3>Istnieje użytkownik o żądanym loginie lub nazwie</h3>");
@@ -105,6 +106,7 @@
           $form['group'] = $group[0]['group_id'];
         }
         db_query("UPDATE users SET login = '{$form['login']}', pass = '$pass', name = '{$form['name']}', email = '{$form['email']}', fbid = '{$form['fbid']}', group_id = {$form['group']} WHERE user_id = $user_id");
+        log_msg("zedytował użytkownika ({$user_id}) '{$form['login']}'.");
         return new HTMLFromString("<h3>Zedytowano użytkownika</h3>");
       } else {
       
@@ -162,6 +164,7 @@
             return new HTMLFromString("<h3>Nie można usunąć Gościa i Administratora.</h3>");
           }
           db_close();
+          log_msg("usunął użytkownika ({$user_id}).");
           return new HTMLFromString("<h3>Usunięto użytkownika.</h3>");
         } else {
           return users_view(array());
