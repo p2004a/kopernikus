@@ -21,8 +21,8 @@
     fclose($file);
 
     header("Content-Type: " . mime_content_type($path));
-    header("Content-Length: $size;");
-    header("Content-Disposition: inline; filename=" . $file_name);
+    header("Content-Length: $size");
+    header("Content-Disposition: inline;filename=\"" . $file_name . "\"");
 
     echo $content;
     exit;
